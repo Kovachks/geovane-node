@@ -4,7 +4,7 @@ var path = require("path");
 var firebase = require("firebase")
 // var config = require('./config')
 var config = require("./config/config.js")
-
+require("firebase/database")
 
 var app = express();
 var PORT = process.env.PORT || 8000;
