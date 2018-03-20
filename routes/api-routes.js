@@ -6,6 +6,7 @@ var googleMapsClient = require("@google/maps")
 //Global Variables
 var database = firebase.database()
 var queryUrl
+var apiKey = config.googleDirectionsApiKey
 
 // console.log(googleMapsClient.createClient().directions({origin: "Cleveland", destination: "Cincinnati", key: config.googleDirectionsApiKey}))
 
@@ -24,8 +25,11 @@ module.exports = function(app) {
     })
 }
 
+function googleMapsDirectionEmbed(data) {
+
+}
+
 function googleDirections(data) {
-    var apiKey = config.googleDirectionsApiKey
     console.log(apiKey)
     queryUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=" + data.startCity + "&destination=" + data.endCity + "&key=" + apiKey
     googleMapsClient.createClient({
@@ -39,7 +43,7 @@ function googleDirections(data) {
 }
 
 function firebasePost(data, database) {
-    database.ref().set({
+    database.ref().push({
         data
     })
 }
