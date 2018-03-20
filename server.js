@@ -7,11 +7,6 @@ var googleMapsClient = require('@google/maps')
 var config = require("./config/config.js")
 require("firebase/database")
 
-
-
-googleMapsClient.createClient({
-    key: config.googleDirectionsApiKey
-})
 var app = express();
 var PORT = process.env.PORT || 8000;
 

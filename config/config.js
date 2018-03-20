@@ -5,7 +5,9 @@ var config = {
     projectId: "geovane-820cc",
     storageBucket: "geovane-820cc.appspot.com",
     messagingSenderId: "171279314766",
-    googleDirectionsApiKey: "AIzaSyCy5-OHxHI2QPYiYymWnKqGEhqQjrPtg-0"
+    googleDirectionsApiKey: "AIzaSyCy5-OHxHI2QPYiYymWnKqGEhqQjrPtg-0",
+    openWeatherApiKey: "bc4aa9619549a6ebc693f378978bcfa9",
+    darkSkyApiKey: 'e2b41e6e8960cfb9e2752c2db6c11b2a'
   };
 
 module.exports = 

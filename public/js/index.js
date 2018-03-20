@@ -22,7 +22,7 @@ $(document).on("click", "#search", function() {
         url: "/search",
         data: searchData
     }).then(function(data) {
-        console.log("THIS IS THE DATA " + data)
-        $("#tripDistance").html(data)
+        console.log("THIS IS THE DATA " + JSON.stringify(data))
+        $("#tripDistance").html("The current temperature of " + data.startCity + " is: " + data.startTemperature + "F<br>" + "The current temperature of " + data.endCity + " is: " + data.endTemperature + 'F')
     })
 })
