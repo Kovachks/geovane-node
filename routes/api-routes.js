@@ -1,4 +1,4 @@
-//Packages
+//Requirements
 var router = require("express").Router();
 var firebase = require("firebase")
 var config = require("../config/config.js")
@@ -6,12 +6,14 @@ var googleMapsClient = require("@google/maps")
 var request = require('request')
 var weather = require('weather-js')
 var Forecast = require('forecast')
+
 //Global Variables
 var database = firebase.database()
-var queryUrl
 var apiKey = config.googleDirectionsApiKey
+var sendData = {}
 
-// Initialize 
+
+// Initialize new forecast object to call weather info
 var forecast = new Forecast({
     service: 'darksky',
     key: config.darkSkyApiKey,
@@ -22,14 +24,6 @@ var forecast = new Forecast({
       seconds: 45
     }
 });
-
-// forecast.get([-33.8683, 151.2086], function(err, weather) {
-//     if(err) return console.log(err);
-//     console.log("_________________________________")
-//     console.log(weather);
-//     console.log("_________________________________")
-//   });
-
 
 module.exports = function(app) {
 
@@ -48,38 +42,49 @@ module.exports = function(app) {
 
 var temperature
 
+//Placeholder for function to embed map data
 function googleMapsDirectionEmbed(data) {
 
 }
 
-var sendData = {}
 
+//Querying google Directions API to grab route data
 function googleDirections(data, res) {
-    queryUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=" + data.startCity + "&destination=" + data.endCity + "&key=" + apiKey
     googleMapsClient.createClient({
         key: apiKey
     }).directions({
         origin: data.startCity,
         destination: data.endCity
     }, function(err, response) {
+
+        //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
 
-        //Weather call for Start City
-        forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
-            sendData.startTemperature = weather.currently.temperature
-            sendData.startCity = trip.start_address
-            sendData.endCity = trip.end_address
-        
-            //Weather call for End City
-            forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
-                sendData.endTemperature = weather.currently.temperature
-                res.send(sendData)
-            })    
-
-        })
+        //Calling weather after response from directions API.  Passing it trip data and our res object along with our send data object
+        weatherCall(trip, sendData, res)
     })
 }
 
+
+//Function for start and end city weather data
+function weatherCall(trip, sendData, res) {
+
+     //Weather call for Start City
+     forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
+        sendData.startTemperature = weather.currently.temperature
+        sendData.startCity = trip.start_address
+        sendData.endCity = trip.end_address
+    
+        //Weather call for End City
+        forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
+            sendData.endTemperature = weather.currently.temperature
+            res.send(sendData)
+        })    
+
+    })
+}
+
+//Function to post query information to database
 function firebasePost(data, database) {
     database.ref().push({
         data
