@@ -2,10 +2,16 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var firebase = require("firebase")
+var googleMapsClient = require('@google/maps')
 // var config = require('./config')
 var config = require("./config/config.js")
 require("firebase/database")
 
+
+
+googleMapsClient.createClient({
+    key: config.googleDirectionsApiKey
+})
 var app = express();
 var PORT = process.env.PORT || 8000;
 
