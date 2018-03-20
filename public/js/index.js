@@ -22,6 +22,7 @@ $(document).on("click", "#search", function() {
         url: "/search",
         data: searchData
     }).then(function(data) {
-        console.log(data)
+        console.log("THIS IS THE DATA " + data)
+        $("#tripDistance").html(data)
     })
 })

@@ -20,7 +20,7 @@ module.exports = function(app) {
 
         //Setting firebase data with new search paramaters
         firebasePost(data, database)
-        googleDirections(data)
+        googleDirections(data, res)
 
     })
 }
@@ -29,7 +29,7 @@ function googleMapsDirectionEmbed(data) {
 
 }
 
-function googleDirections(data) {
+function googleDirections(data, res) {
     console.log(apiKey)
     queryUrl = "https://maps.googleapis.com/maps/api/directions/json?origin=" + data.startCity + "&destination=" + data.endCity + "&key=" + apiKey
     googleMapsClient.createClient({
@@ -38,7 +38,8 @@ function googleDirections(data) {
         origin: data.startCity,
         destination: data.endCity
     }, function(err, response) {
-        console.log(response.json.routes[0].legs)
+        console.log(response.json.routes[0].legs[0].distance.text)
+        res.send(response.json.routes[0].legs[0].distance.text)
     })
 }
 
