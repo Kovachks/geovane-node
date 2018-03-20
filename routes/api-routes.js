@@ -38,7 +38,7 @@ function googleDirections(data) {
         origin: data.startCity,
         destination: data.endCity
     }, function(err, response) {
-        console.log(response.json)
+        console.log(response.json.routes[0].legs)
     })
 }
 
