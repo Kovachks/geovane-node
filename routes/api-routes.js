@@ -68,7 +68,7 @@ function googleDirections(data, res) {
 
 //Function for start and end city weather data
 function weatherCall(trip, sendData, res) {
-
+    // console.log(trip.steps)
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
         sendData.startTemperature = weather.currently.temperature
@@ -78,10 +78,56 @@ function weatherCall(trip, sendData, res) {
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
             sendData.endTemperature = weather.currently.temperature
-            res.send(sendData)
+            weatherLoop(trip, sendData, res)
         })    
 
     })
+}
+
+function weatherLoop(trip, sendData, res) {
+    // console.log(trip.steps)
+    var j = 0
+    sendData["allSteps"] = []
+    for(var i = 0; i <= trip.steps.length -1; i += 1) {
+        if (trip.steps[i].distance.value > 8000) {
+            sendData.allSteps[j] = {
+                stepDistanceMeter: trip.steps[i].distance.value,
+                stepDistanceMiles: trip.steps[i].distance.text,
+                stepLat: trip.steps[i].start_location.lat,
+                stepLng: trip.steps[i].start_location.lng
+            }
+            j += 1
+            console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+        } else {
+            console.log("This is not greater: " + trip.steps[i].distance.value)
+        }
+    }
+    // console.log(sendData.allSteps.length)
+    // console.log(sendData)
+    weatherLoopQuery(sendData, res)
+}
+
+function weatherLoopQuery(sendData, res) {
+    console.log(JSON.stringify(sendData))
+    let k = sendData.allSteps.length    
+    for (let i = 0; i < sendData.allSteps.length; i+= 1) {
+
+        forecast.get([sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng], function(err, weather) {
+            console.log("this is k: " + k)
+            console.log(weather.currently.temperature)
+            sendData.allSteps[i].currentTemp = weather.currently.temperature
+            k--
+        })
+        if (k == 0) {
+            setTimeout(function(){done(res, sendData)}, 5000)
+        }
+    }
+
+}
+
+function done(res, sendData) {
+    console.log("this is the final sendData: " + JSON.stringify(sendData))
+    res.send(sendData)
 }
 
 //Function to post query information to database
