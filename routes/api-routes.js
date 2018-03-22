@@ -113,19 +113,22 @@ function weatherLoop(trip, sendData, res) {
 function weatherLoopQuery(sendData, res) {
     console.log(JSON.stringify(sendData))
     let k = sendData.allSteps.length    
+    console.log("initial K value: " + k)
     for (let i = 0; i < sendData.allSteps.length; i+= 1) {
 
         forecast.get([sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng], function(err, weather) {
             console.log("this is k: " + k)
             console.log(weather.currently.temperature)
             sendData.allSteps[i].currentTemp = weather.currently.temperature
-            
+            k--     
+            if (k == 0) {
+                done(res, sendData)
+         }       
         })
-        k--
-        if (k == 0) {
-           done(res, sendData)        }
-    }
+        console.log("this is the end K value: " + k)
 
+
+    }
 }
 
 function done(res, sendData) {
