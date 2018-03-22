@@ -71,9 +71,12 @@ function weatherCall(trip, sendData, res) {
     // console.log(trip.steps)
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
+        //  console.log(trip)
         sendData.startTemperature = weather.currently.temperature
         sendData.startCity = trip.start_address
+        sendData.startGps = trip.start_location
         sendData.endCity = trip.end_address
+        sendData.endGps = trip.end_location
     
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
