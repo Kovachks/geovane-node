@@ -116,11 +116,11 @@ function weatherLoopQuery(sendData, res) {
             console.log("this is k: " + k)
             console.log(weather.currently.temperature)
             sendData.allSteps[i].currentTemp = weather.currently.temperature
-            k--
+            
         })
+        k--
         if (k == 0) {
-            setTimeout(function(){done(res, sendData)}, 5000)
-        }
+           done(res, sendData)        }
     }
 
 }
