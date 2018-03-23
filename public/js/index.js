@@ -46,6 +46,11 @@ function initMap(data) {
       zoom: 7,
       center: data.startGps
     });
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map: map
+    });
     var marker = new google.maps.Marker({
       position: data.startGps,
       map: map
@@ -62,7 +67,24 @@ function initMap(data) {
             icon: "./images/" + markerObject[i].weather + ".png"
         })
     }
+    displayRoute(data.startCity, data.endCity, directionsService,
+    directionsDisplay);
 }
+
+function displayRoute(origin, destination, service, display) {
+    service.route({
+      origin: origin,
+      destination: destination,
+      travelMode: 'DRIVING',
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === 'OK') {
+        display.setDirections(response);
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+  }
 
 
 $(document).ready(function() {
