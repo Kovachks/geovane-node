@@ -53,11 +53,13 @@ function initMap(data) {
     });
     var marker = new google.maps.Marker({
       position: data.startGps,
-      map: map
+      map: map,
+      icon: "./images/" + data.startWeather + ".png"
     });
     marker = new google.maps.Marker({
         position: data.endGps,
-        map: map
+        map: map,
+        icon: "./images/" + data.endWeather + ".png"
     })
     // displayMarkers(markerObject)
     for (var i = 0; i < markerObject.length; i += 1) {
