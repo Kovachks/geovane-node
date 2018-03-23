@@ -70,15 +70,42 @@ function initMap(data) {
         })
     }
     displayRoute(data.startCity, data.endCity, directionsService,
-    directionsDisplay);
+    directionsDisplay, markerObject);
 }
 
-function displayRoute(origin, destination, service, display) {
+function displayRoute(origin, destination, service, display, markerObject) {
+    var midStop1 = parseInt(markerObject.length / 5);
+    var midStop2 = parseInt(markerObject.length * 2 / 5);
+    var midStop3 = parseInt(markerObject.length * 3 / 5);
+    var midStop4 = parseInt(markerObject.length * 4 / 5);
+    var lateStop = parseInt(markerObject.length - 2); 
     service.route({
       origin: origin,
       destination: destination,
       travelMode: 'DRIVING',
-      avoidTolls: true
+      avoidTolls: true,
+      waypoints: [{
+          location: {lat: markerObject[midStop1].lat, lng: markerObject[midStop1].lng},
+          stopover: false
+      },
+      {
+          location: {lat: markerObject[midStop2].lat, lng: markerObject[midStop2].lng},
+          stopover: false
+      },
+      {
+        location: {lat: markerObject[midStop3].lat, lng: markerObject[midStop3].lng},
+        stopover: false
+    },
+    {
+        location: {lat: markerObject[midStop4].lat, lng: markerObject[midStop4].lng},
+        stopover: false
+    },
+    {
+        location: {lat: markerObject[lateStop].lat, lng: markerObject[lateStop].lng},
+        stopover: false
+    }
+    ]
+
     }, function(response, status) {
       if (status === 'OK') {
         display.setDirections(response);
