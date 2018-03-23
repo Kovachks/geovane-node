@@ -59,6 +59,7 @@ function googleDirections(data, res) {
 
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
+        console.log(response.json.routes[0].legs[0].steps)
 
         //Calling weather after response from directions API.  Passing it trip data and our res object along with our send data object
         weatherCall(trip, sendData, res)
@@ -75,12 +76,14 @@ function weatherCall(trip, sendData, res) {
         sendData.startTemperature = weather.currently.temperature
         sendData.startCity = trip.start_address
         sendData.startGps = trip.start_location
+        sendData.startWeather = weather.currently.icon
         sendData.endCity = trip.end_address
         sendData.endGps = trip.end_location
     
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
             sendData.endTemperature = weather.currently.temperature
+            sendData.endWeather = weather.currently.icon
             weatherLoop(trip, sendData, res)
         })    
 
@@ -92,7 +95,7 @@ function weatherLoop(trip, sendData, res) {
     var j = 0
     sendData["allSteps"] = []
     for(var i = 0; i <= trip.steps.length -1; i += 1) {
-        if (trip.steps[i].distance.value > 8000) {
+        if (trip.steps[i].distance.value > 15000) {
             sendData.allSteps[j] = {
                 stepDistanceMeter: trip.steps[i].distance.value,
                 stepDistanceMiles: trip.steps[i].distance.text,
@@ -112,22 +115,20 @@ function weatherLoop(trip, sendData, res) {
 
 function weatherLoopQuery(sendData, res) {
     console.log(JSON.stringify(sendData))
-    let k = sendData.allSteps.length    
+    let k = sendData.allSteps.length
     console.log("initial K value: " + k)
     for (let i = 0; i < sendData.allSteps.length; i+= 1) {
-
         forecast.get([sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng], function(err, weather) {
-            console.log("this is k: " + k)
+            console.log(weather)
             console.log(weather.currently.temperature)
-            sendData.allSteps[i].currentTemp = weather.currently.temperature
+            sendData.allSteps[i].currentTemp = weather.currently.temperature;
+            sendData.allSteps[i].currentWeather = weather.currently.icon;
             k--     
             if (k == 0) {
                 done(res, sendData)
          }       
         })
         console.log("this is the end K value: " + k)
-
-
     }
 }
 

@@ -20,40 +20,24 @@ $(document).on("click", "#search", function() {
         console.log("THIS IS THE DATA " + JSON.stringify(data))
         var tripdata = $()
         initMap(data)
-        $("#tripDistance").html("The current temperature of " + data.startCity + " is: " + data.startTemperature + "F<br>"
-         + "The current temperature of " + data.endCity + " is: " + data.endTemperature + 'F')
+        $("#tripDistance").html("The current temperature of " + data.startCity + " is: " + data.startTemperature + "F and the current weather is: "+ data.startWeather + "<br>"
+         + "The current temperature of " + data.endCity + " is: " + data.endTemperature + 'F and the current weather is: ' + data.endWeather)
          var stepData = $("<div>")
          for (var i = 0; i < data.allSteps.length; i += 1) {
              var k = i + 1
-             $("#tripDistance").append("<br>Step: " + k + " Current Temp: " + data.allSteps[i].currentTemp)
+             $("#tripDistance").append("<br>Step " + k + " Current Temp: " + data.allSteps[i].currentTemp + "current weather: " + data.allSteps[i].currentWeather)
              }
 
     })
 })
-
-function createMarker(latlng) {
-    console.log("test")
-    var marker = new google.maps.Marker({
-        position: latlng,
-        setMap: map
-    })
-}
-
-function displayMarkers(markerObject) {
-    console.log("this is the markerObject: " + JSON.stringify(markerObject))
-    for (var i = 0; i < markerObject.length; i += 1) {
-        console.log("This is a test")
-        var latlng = new google.maps.LatLng(markerObject[i].lat, markerObject[i].lng)
-        createMarker(latlng)
-    }
-}
 
 function initMap(data) {
     var markerObject = []
     for (let i = 0; i < data.allSteps.length; i += 1) {
         markerObject[i] = {
             lat: data.allSteps[i].stepLat,
-            lng: data.allSteps[i].stepLng
+            lng: data.allSteps[i].stepLng,
+            weather: data.allSteps[i].currentWeather
         }
     }
     console.log(markerObject)
@@ -74,7 +58,8 @@ function initMap(data) {
     for (var i = 0; i < markerObject.length; i += 1) {
         marker = new google.maps.Marker({
             position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
-            map:map
+            map:map,
+            icon: "./images/" + markerObject[i].weather + ".png"
         })
     }
 }
@@ -88,3 +73,14 @@ $(document).ready(function() {
         // document.getElementById('submit').addEventListener('click', function() {
         //   calculateAndDisplayRoute(directionsService, directionsDisplay);
         // });
+
+
+
+
+
+
+var brownColor = "brown"
+
+{color: brownColor}
+
+
