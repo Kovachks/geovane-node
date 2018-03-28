@@ -1,4 +1,4 @@
-$(document).on("click", "#login", function() {
+$(document).on("click", "#singup", function() {
     let email = $("#username").val()
     let password = $("#password").val()
     let data = {
@@ -7,10 +7,33 @@ $(document).on("click", "#login", function() {
     }
     $.ajax({
         method: "POST",
+        url: "/submit",
+        data: data
+    }).then(function(data) {
+        console.log("this is the return data for signup: " + data)
+    })
+})
+
+$(document).on("click", "#login", function() {
+    let email = $("#loginUsername").val()
+    let password = $("#loginPassword").val()
+    let data = {
+        email: email,
+        password: password
+    }
+    console.log(data)
+    $.ajax({
+        method: "POST",
         url: "/login",
         data: data
     }).then(function(data) {
-        console.log("this is the return data for login: " + data)
+        console.log(data)
+        if (data.email) {
+            alert("Logged in as " + data.email)
+        }
+        else {
+            alert(data)
+        }
     })
 })
 

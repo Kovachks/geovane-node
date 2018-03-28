@@ -13,6 +13,14 @@ var PORT = process.env.PORT || 8000;
 firebase.initializeApp(config);
 
 
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log(user)
+    } else {
+      // No user is signed in.
+    }
+  });
+
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

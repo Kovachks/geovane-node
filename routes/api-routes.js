@@ -11,7 +11,6 @@ var database = firebase.database()
 var apiKey = config.googleDirectionsApiKey
 var sendData = {}
 
-
 // Initialize new forecast object to call weather info
 var forecast = new Forecast({
     service: 'darksky',
@@ -26,15 +25,39 @@ var forecast = new Forecast({
 
 module.exports = function(app) {
 
-    app.post("/login", function(req, res) {
+    app.post("/signup", function(req, res) {
         console.log(req.body)
         firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log(errorMessage)
-          });
           res.send("finished")
+        })
     })
+
+    app.post("/login", function(req, res) {
+        console.log(req.body)
+        firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
+            res.send(user)
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorMessage)
+            if (errorMessage === "There is no user record corresponding to this identifier. The user may have been deleted."){
+                res.send("No user with that login email")
+                }
+            else if (errorMessage === "The email address is badly formatted.") {
+                    res.send("Please enter a valid email")
+            } 
+            else if (errorMessage === "The password is invalid or the user does not have a password.") {
+                res.send("Password is invalid")
+            }
+            else {
+                console.log(errorMessage)
+                res.send("logged in")
+            }
+        })
+    });
 
     //Fired on submission of primary search
     app.post("/search", function(req, res) {
