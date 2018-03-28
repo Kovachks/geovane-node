@@ -6,7 +6,6 @@ var googleMapsClient = require("@google/maps")
 var request = require('request')
 var weather = require('weather-js')
 var Forecast = require('forecast')
-
 //Global Variables
 var database = firebase.database()
 var apiKey = config.googleDirectionsApiKey
@@ -26,6 +25,16 @@ var forecast = new Forecast({
 });
 
 module.exports = function(app) {
+
+    app.post("/login", function(req, res) {
+        console.log(req.body)
+        firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorMessage)
+          });
+          res.send("finished")
+    })
 
     //Fired on submission of primary search
     app.post("/search", function(req, res) {

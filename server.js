@@ -6,11 +6,12 @@ var googleMapsClient = require('@google/maps')
 // var config = require('./config')
 var config = require("./config/config.js")
 require("firebase/database")
-
+require("firebase/auth")
 var app = express();
 var PORT = process.env.PORT || 8000;
 
 firebase.initializeApp(config);
+
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());

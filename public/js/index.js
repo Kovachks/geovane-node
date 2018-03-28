@@ -1,3 +1,19 @@
+$(document).on("click", "#login", function() {
+    let email = $("#username").val()
+    let password = $("#password").val()
+    let data = {
+        email: email,
+        password: password
+    }
+    $.ajax({
+        method: "POST",
+        url: "/login",
+        data: data
+    }).then(function(data) {
+        console.log("this is the return data for login: " + data)
+    })
+})
+
 $(document).on("click", "#search", function() {
 
     let startCity = $("#startCity").val()
@@ -49,7 +65,8 @@ function initMap(data) {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer({
         draggable: true,
-        map: map
+        map: map,
+        suppressMarkers: true
     });
     var marker = new google.maps.Marker({
       position: data.startGps,
@@ -73,12 +90,17 @@ function initMap(data) {
     directionsDisplay, markerObject);
 }
 
+
 function displayRoute(origin, destination, service, display, markerObject) {
+   
+   //Creating up to 5 midpoints in order to increase chances of google directions matching the map directions route
     var midStop1 = parseInt(markerObject.length / 5);
     var midStop2 = parseInt(markerObject.length * 2 / 5);
     var midStop3 = parseInt(markerObject.length * 3 / 5);
     var midStop4 = parseInt(markerObject.length * 4 / 5);
     var lateStop = parseInt(markerObject.length - 2); 
+
+    //Setting the directions route and also adding in the waypoints defined above.
     service.route({
       origin: origin,
       destination: destination,
@@ -113,25 +135,7 @@ function displayRoute(origin, destination, service, display, markerObject) {
         alert('Could not display directions due to: ' + status);
       }
     });
-  }
+}
 
-
-$(document).ready(function() {
-
-})
-
-
-        // document.getElementById('submit').addEventListener('click', function() {
-        //   calculateAndDisplayRoute(directionsService, directionsDisplay);
-        // });
-
-
-
-
-
-
-var brownColor = "brown"
-
-{color: brownColor}
 
 
