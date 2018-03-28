@@ -1,4 +1,24 @@
-$(document).on("click", "#singup", function() {
+$(document).ready(function() {
+    $("#signupDiv").hide()
+    $("#loginDiv").hide()
+    $("#logout").hide()
+})
+
+$(document).on('click', "#signupButton", function() {
+    $("#loginButton").show()
+    $("#loginDiv").hide()
+    $("#signupDiv").show()
+    $("#signupButton").hide()
+})
+
+$(document).on('click', "#loginButton", function() {
+    $("#signupButton").show()
+    $("#signupDiv").hide()
+    $("#loginDiv").show()
+    $("#loginButton").hide()
+})
+
+$(document).on("click", "#signup", function() {
     let email = $("#username").val()
     let password = $("#password").val()
     let data = {
@@ -7,10 +27,26 @@ $(document).on("click", "#singup", function() {
     }
     $.ajax({
         method: "POST",
-        url: "/submit",
+        url: "/signup",
         data: data
     }).then(function(data) {
-        console.log("this is the return data for signup: " + data)
+        console.log(data)
+        // $.ajax({
+        //     method: "POST",
+        //     url: "/signin",
+        // })
+    })
+})
+
+$(document).on("click", "#logout", function() {
+    $.ajax({
+        method: "POST",
+        url: "/logout"
+    }).then(function(data) {
+        $("#logout").hide()
+        $("#loginButton").show()
+        $("#signupButton").show()
+        $("#signedIn").hide().text()
     })
 })
 
@@ -27,9 +63,13 @@ $(document).on("click", "#login", function() {
         url: "/login",
         data: data
     }).then(function(data) {
-        console.log(data)
+        console.log(data.uid)
         if (data.email) {
-            alert("Logged in as " + data.email)
+            $("#signedIn").show().text("Signed in as " + data.email)
+            $("#loginDiv").hide()
+            $("#signupButton").hide()
+            $("#logout").show()
+            window.localStorage.setItem("user", data.uid)
         }
         else {
             alert(data)
@@ -43,12 +83,14 @@ $(document).on("click", "#search", function() {
     let startState = $("#startState").val()
     let endCity = $("#endCity").val()
     let endState = $("#endState").val()
+    let user = window.localStorage.getItem("user")
 
     var searchData = {
         startCity: startCity,
         startState: startState,
         endCity: endCity,
-        endState: endState
+        endState: endState,
+        user: user
     } 
     console.log(searchData)
     $.ajax({

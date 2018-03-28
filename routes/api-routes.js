@@ -27,17 +27,41 @@ module.exports = function(app) {
 
     app.post("/signup", function(req, res) {
         console.log(req.body)
-        firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
+            console.log(user)
+            user.sendEmailVerification().then(function() {
+                // Email sent.
+              }).catch(function(error) {
+                // An error happened.
+              });
+            res.send(user)
+        }).catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
-          res.send("finished")
         })
+    })
+
+    app.post("/logout", function(req, res) {
+        console.log("test")
+        firebase.auth().signOut().then(function() {
+            res.send("logged out")
+          }, function(error) {
+            console.log(error)
+          });
     })
 
     app.post("/login", function(req, res) {
         console.log(req.body)
+
         firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
-            res.send(user)
+            var userCheck = firebase.auth().currentUser
+            if (userCheck.emailVerified === true) {
+                res.send(user)
+            } else {
+                firebase.auth().signOut().then(function() {
+                    res.send("Email Not Verified")
+                })
+            }
         }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;

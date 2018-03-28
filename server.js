@@ -10,16 +10,21 @@ require("firebase/auth")
 var app = express();
 var PORT = process.env.PORT || 8000;
 
+
+
 firebase.initializeApp(config);
 
+var user = firebase.auth().currentuser
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log(user)
+
     } else {
       // No user is signed in.
     }
   });
+
+console.log(user)
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
