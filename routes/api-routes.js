@@ -6,6 +6,7 @@ var googleMapsClient = require("@google/maps")
 var request = require('request')
 var weather = require('weather-js')
 var Forecast = require('forecast')
+var passwordHash = require('password-hash')
 //Global Variables
 var database = firebase.database()
 var apiKey = config.googleDirectionsApiKey
@@ -56,6 +57,8 @@ module.exports = function(app) {
         firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             var userCheck = firebase.auth().currentUser
             if (userCheck.emailVerified === true) {
+                user.hashPass = passwordHash.generate(req.body.password)
+                console.log(user.hashPass)
                 res.send(user)
             } else {
                 firebase.auth().signOut().then(function() {
