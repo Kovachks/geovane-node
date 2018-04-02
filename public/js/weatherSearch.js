@@ -84,7 +84,7 @@ function displayRoute(origin, destination, service, display, markerObject) {
     var midStop2 = parseInt(markerObject.length * 2 / 5);
     var midStop3 = parseInt(markerObject.length * 3 / 5);
     var midStop4 = parseInt(markerObject.length * 4 / 5);
-    var lateStop = parseInt(markerObject.length - 2); 
+    var lateStop = parseInt(markerObject.length - 1); 
 
     //Setting the directions route and also adding in the waypoints defined above.
     service.route({

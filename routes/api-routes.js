@@ -118,7 +118,8 @@ function googleDirections(data, res) {
 
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
-        console.log(response.json.routes[0].legs[0].steps)
+        sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)
+        // console.log(response.json.routes[0].legs[0])
 
         //Calling weather after response from directions API.  Passing it trip data and our res object along with our send data object
         weatherCall(trip, sendData, res)
@@ -128,7 +129,6 @@ function googleDirections(data, res) {
 
 //Function for start and end city weather data
 function weatherCall(trip, sendData, res) {
-    // console.log(trip.steps)
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
         //  console.log(trip)
@@ -141,8 +141,9 @@ function weatherCall(trip, sendData, res) {
     
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
-            sendData.endTemperature = weather.currently.temperature
-            sendData.endWeather = weather.currently.icon
+            sendData.endTemperature = weather.hourly.data[sendData.tripTime].temperature
+            sendData.endWeather = weather.hourly.data[sendData.tripTime].icon
+            console.log(JSON.stringify(weather.hourly.data[sendData.tripTime]))
             weatherLoop(trip, sendData, res)
         })    
 
@@ -152,18 +153,22 @@ function weatherCall(trip, sendData, res) {
 function weatherLoop(trip, sendData, res) {
     // console.log(trip.steps)
     var j = 0
+    var tripTime = 0
     sendData["allSteps"] = []
     for(var i = 0; i <= trip.steps.length -1; i += 1) {
-        if (trip.steps[i].distance.value > 15000) {
+        if (trip.steps[i].distance.value > 30000) {
+            tripTime = tripTime + trip.steps[i].duration.value
             sendData.allSteps[j] = {
                 stepDistanceMeter: trip.steps[i].distance.value,
                 stepDistanceMiles: trip.steps[i].distance.text,
                 stepLat: trip.steps[i].start_location.lat,
-                stepLng: trip.steps[i].start_location.lng
+                stepLng: trip.steps[i].start_location.lng,
+                time: tripTime
             }
             j += 1
             console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
         } else {
+            tripTime = tripTime + trip.steps[i].duration.value
             console.log("This is not greater: " + trip.steps[i].distance.value)
         }
     }
@@ -173,26 +178,26 @@ function weatherLoop(trip, sendData, res) {
 }
 
 function weatherLoopQuery(sendData, res) {
-    console.log(JSON.stringify(sendData))
+    // console.log(JSON.stringify(sendData))
     let k = sendData.allSteps.length
-    console.log("initial K value: " + k)
     for (let i = 0; i < sendData.allSteps.length; i+= 1) {
         forecast.get([sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng], function(err, weather) {
-            console.log(weather)
-            console.log(weather.currently.temperature)
-            sendData.allSteps[i].currentTemp = weather.currently.temperature;
-            sendData.allSteps[i].currentWeather = weather.currently.icon;
+            // console.log(weather.hourly.data)
+            var durationHour = Math.round(sendData.allSteps[i].time / 60 /60)
+            sendData.allSteps[i].time = Math.round(sendData.allSteps[i].time / 60)
+            // console.log(weather.currently.temperature)
+            sendData.allSteps[i].currentTemp = weather.hourly.data[durationHour].temperature;
+            sendData.allSteps[i].currentWeather = weather.hourly.data[durationHour].icon;
             k--     
             if (k == 0) {
                 done(res, sendData)
          }       
         })
-        console.log("this is the end K value: " + k)
     }
 }
 
 function done(res, sendData) {
-    console.log("this is the final sendData: " + JSON.stringify(sendData))
+    // console.log("this is the final sendData: " + JSON.stringify(sendData))
     res.send(sendData)
 }
 
