@@ -7,8 +7,10 @@ var request = require('request')
 var weather = require('weather-js')
 var Forecast = require('forecast')
 var passwordHash = require('password-hash')
+var geocoder = require('geocoder')
 //Global Variables
 var database = firebase.database()
+var cities = require('smart-city-finder')
 var apiKey = config.googleDirectionsApiKey
 var sendData = {}
 
@@ -109,6 +111,7 @@ function googleMapsDirectionEmbed(data) {
 
 //Querying google Directions API to grab route data
 function googleDirections(data, res) {
+    console.log(cities.gps_lookup(35,-79))
     googleMapsClient.createClient({
         key: apiKey
     }).directions({
@@ -119,6 +122,7 @@ function googleDirections(data, res) {
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
         sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)
+        sendData.tripTimeMinutes = Math.round(response.json.routes[0].legs[0].duration.value /60)
         // console.log(response.json.routes[0].legs[0])
 
         //Calling weather after response from directions API.  Passing it trip data and our res object along with our send data object
@@ -143,7 +147,6 @@ function weatherCall(trip, sendData, res) {
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
             sendData.endTemperature = weather.hourly.data[sendData.tripTime].temperature
             sendData.endWeather = weather.hourly.data[sendData.tripTime].icon
-            console.log(JSON.stringify(weather.hourly.data[sendData.tripTime]))
             weatherLoop(trip, sendData, res)
         })    
 
@@ -190,13 +193,33 @@ function weatherLoopQuery(sendData, res) {
             sendData.allSteps[i].currentWeather = weather.hourly.data[durationHour].icon;
             k--     
             if (k == 0) {
-                done(res, sendData)
+                cityLookup(res, sendData)
          }       
         })
     }
 }
 
+function cityLookup(res, sendData) {
+    let k = sendData.allSteps.length
+    for (let i = 0; i < sendData.allSteps.length; i += 1) {
+        
+        sendData.allSteps[i].cityInfo = cities.gps_lookup(sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng)
+        
+            k--
+            if (k == 0) {
+                done(res, sendData)
+            }
+        // }
+        // geocoder.reverseGeocode(sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng, function(err, data) {
+        //     console.log(err)
+        //     // console.log(data.results[0].address_components[1])
+        //     sendData.allSteps[i].city = data.results[0].address_components[1].short_name
+        }
+    }
+
+
 function done(res, sendData) {
+    // console.log(sendData.allSteps[0].cityInfo)
     // console.log("this is the final sendData: " + JSON.stringify(sendData))
     res.send(sendData)
 }
