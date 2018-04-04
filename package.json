@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Kovachks/geovane-node#readme",
   "dependencies": {
     "@google/maps": "^0.4.5",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "cities": "^1.1.2",
     "express": "^4.16.3",
