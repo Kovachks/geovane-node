@@ -45,20 +45,20 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
         //Creating html string to embed table with results from server response
-        $("#tripDistance").html('<table id="resultsTable"><tbody id="resultsTableBody"><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
-         data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>0</td></tr>')
+        $("#tripDistance").html('<table id="resultsTable"><tbody id="resultsTableBody"><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Precip %</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
+         data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + (data.startPrecip * 100) + '%</td><td>0</td></tr>')
         
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
         for (var i = 0; i < data.allSteps.length; i += 1) {
             var counter = i + 1
             $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
              '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
-              Math.round(data.allSteps[i].currentTemp) + '</td><td>' + data.allSteps[i].time + '</td></tr>')
+              Math.round(data.allSteps[i].currentTemp) + '</td><td>' + (data.allSteps[i].precip * 100) + '%</td><td>' + data.allSteps[i].time + '</td></tr>')
         }
         
         //Finishing off the table with the end points data
         $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
-         '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + data.tripTimeMinutes + '</td></tr></tbody></table>')
+         '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + (data.endPrecip * 100) + '%</td><td>' + data.tripTimeMinutes + '</td></tr></tbody></table>')
     })
 })
 

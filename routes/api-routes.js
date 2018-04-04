@@ -121,6 +121,8 @@ function googleDirections(data, res) {
 
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
+
+        //Storing total triptime for use later with weather calls in order to time delay weather information
         sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)
         sendData.tripTimeMinutes = Math.round(response.json.routes[0].legs[0].duration.value /60)
         // console.log(response.json.routes[0].legs[0])
@@ -135,18 +137,24 @@ function googleDirections(data, res) {
 function weatherCall(trip, sendData, res) {
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
-        //  console.log(trip)
+         console.log(weather)
         sendData.startTemperature = weather.currently.temperature
         sendData.startCity = trip.start_address
         sendData.startGps = trip.start_location
         sendData.startWeather = weather.currently.icon
         sendData.endCity = trip.end_address
         sendData.endGps = trip.end_location
+        sendData.startPrecip = weather.currently.precipProbability
     
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
+
+            //Grabbing weather data that is delayed for trip time
             sendData.endTemperature = weather.hourly.data[sendData.tripTime].temperature
             sendData.endWeather = weather.hourly.data[sendData.tripTime].icon
+            sendData.endPrecip = weather.hourly.data[sendData.tripTime].precipProbability
+
+            //Passing arguments to weatherLoop function to loop through steps on route
             weatherLoop(trip, sendData, res)
         })    
 
@@ -155,70 +163,44 @@ function weatherCall(trip, sendData, res) {
 
 function weatherLoop(trip, sendData, res) {
     // console.log(trip.steps)
-    var j = 0
-    var tripTime = 0
     sendData["allSteps"] = []
     if (sendData.tripTime <= 2) {
-        for(var i = 0; i <= trip.steps.length -1; i += 1) {
-            if (trip.steps[i].distance.value > 6000) {
-                tripTime = tripTime + trip.steps[i].duration.value
-                sendData.allSteps[j] = {
-                    stepDistanceMeter: trip.steps[i].distance.value,
-                    stepDistanceMiles: trip.steps[i].distance.text,
-                    stepLat: trip.steps[i].start_location.lat,
-                    stepLng: trip.steps[i].start_location.lng,
-                    time: tripTime
-                }
-                j += 1
-                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
-            } else {
-                tripTime = tripTime + trip.steps[i].duration.value
-                console.log("This is not greater: " + trip.steps[i].distance.value)
-            }
-        }
+        weatherLoopCall(trip, sendData, res, 6000)
     }
     else if (sendData.tripTime > 2 && sendData.tripTime <=8) {
-        for(var i = 0; i <= trip.steps.length -1; i += 1) {
-            if (trip.steps[i].distance.value > 30000) {
-                tripTime = tripTime + trip.steps[i].duration.value
-                sendData.allSteps[j] = {
-                    stepDistanceMeter: trip.steps[i].distance.value,
-                    stepDistanceMiles: trip.steps[i].distance.text,
-                    stepLat: trip.steps[i].start_location.lat,
-                    stepLng: trip.steps[i].start_location.lng,
-                    time: tripTime
-                }
-                j += 1
-                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
-            } else {
-                tripTime = tripTime + trip.steps[i].duration.value
-                console.log("This is not greater: " + trip.steps[i].distance.value)
-            }
-        }
-    }
-    else if (sendData.tripTime > 8) {
-        for(var i = 0; i <= trip.steps.length -1; i += 1) {
-            if (trip.steps[i].distance.value > 60000) {
-                tripTime = tripTime + trip.steps[i].duration.value
-                sendData.allSteps[j] = {
-                    stepDistanceMeter: trip.steps[i].distance.value,
-                    stepDistanceMiles: trip.steps[i].distance.text,
-                    stepLat: trip.steps[i].start_location.lat,
-                    stepLng: trip.steps[i].start_location.lng,
-                    time: tripTime
-                }
-                j += 1
-                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
-            } else {
-                tripTime = tripTime + trip.steps[i].duration.value
-                console.log("This is not greater: " + trip.steps[i].distance.value)
-            }
-        }
+        weatherLoopCall(trip, sendData, res, 30000)
+}
+    else if (sendData.tripTime > 8) {        
+        weatherLoopCall(trip, sendData, res, 60000)
     }
     // console.log(sendData.allSteps.length)
     // console.log(sendData)
     weatherLoopQuery(sendData, res)
 }
+
+//Really bad function name.  Fix later
+function weatherLoopCall(trip, sendData, res, distance) {
+    var j = 0
+    var tripTime = 0
+    for(var i = 0; i <= trip.steps.length -1; i += 1) {
+        if (trip.steps[i].distance.value > distance) {
+            tripTime = tripTime + trip.steps[i].duration.value
+            sendData.allSteps[j] = {
+                stepDistanceMeter: trip.steps[i].distance.value,
+                stepDistanceMiles: trip.steps[i].distance.text,
+                stepLat: trip.steps[i].start_location.lat,
+                stepLng: trip.steps[i].start_location.lng,
+                time: tripTime
+            }
+            j += 1
+            console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+        } else {
+            tripTime = tripTime + trip.steps[i].duration.value
+            console.log("This is not greater: " + trip.steps[i].distance.value)
+        }
+    }
+}
+
 
 function weatherLoopQuery(sendData, res) {
     // console.log(JSON.stringify(sendData))
@@ -231,6 +213,7 @@ function weatherLoopQuery(sendData, res) {
             // console.log(weather.currently.temperature)
             sendData.allSteps[i].currentTemp = weather.hourly.data[durationHour].temperature;
             sendData.allSteps[i].currentWeather = weather.hourly.data[durationHour].icon;
+            sendData.allSteps[i].precip = weather.hourly.data[durationHour].precipProbability;
             k--     
             if (k == 0) {
                 cityLookup(res, sendData)
@@ -239,6 +222,7 @@ function weatherLoopQuery(sendData, res) {
     }
 }
 
+//Function for looking up city data along route.  Now just pulling city/state of each step
 function cityLookup(res, sendData) {
     let k = sendData.allSteps.length
     for (let i = 0; i < sendData.allSteps.length; i += 1) {
