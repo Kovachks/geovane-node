@@ -27,7 +27,7 @@ $(document).on("click", "#search", function() {
         
         for (var i = 0; i < data.allSteps.length; i += 1) {
             var counter = i + 1
-            $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather + '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state + '</td><td>' + data.allSteps[i].currentTemp + '</td><td>' + data.allSteps[i].time + '</td></tr>')
+            $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather + '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' + data.allSteps[i].currentTemp + '</td><td>' + data.allSteps[i].time + '</td></tr>')
         }
         
         
