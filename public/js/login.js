@@ -1,3 +1,4 @@
+//Initial loading of our page and hide elements that aren't needed on page load... Looking to remove this with css when I get to it
 $(document).ready(function() {
     $("#signupDiv").hide()
     $("#loginDiv").hide()
@@ -5,6 +6,7 @@ $(document).ready(function() {
     $("#newTrip").hide()
 })
 
+//Displaying input fields for signing up
 $(document).on('click', "#signupButton", function() {
     $("#loginButton").show()
     $("#loginDiv").hide()
@@ -12,6 +14,7 @@ $(document).on('click', "#signupButton", function() {
     $("#signupButton").hide()
 })
 
+//Displaying input fields for loging in
 $(document).on('click', "#loginButton", function() {
     $("#signupButton").show()
     $("#signupDiv").hide()
@@ -19,36 +22,49 @@ $(document).on('click', "#loginButton", function() {
     $("#loginButton").hide()
 })
 
+//Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
 $(document).on("click", "#signup", function() {
+
+    //Grabbing input values and building out our data object
     let email = $("#username").val()
     let password = $("#password").val()
     let data = {
         email: email,
         password: password
     }
+
+    //Post ajax route for our signup
     $.ajax({
         method: "POST",
         url: "/signup",
         data: data
-    }).then(function(data) {
+    })
+    //promise from server that returns our login info is successful
+    .then(function(data) {
         console.log(data)
        if (data.email) {
+
+            //Change this alert to modal in future on successful login
            alert("Please check your email for a verification link")
        } else {
+
+            //Change this alert to modal in future on unsuccessful login
             alert("Signup failed")
        }
-        // $.ajax({
-        //     method: "POST",
-        //     url: "/signin",
-        // })
     })
 })
 
+//Logout click handler
 $(document).on("click", "#logout", function() {
+    
+    //AJAX post route for logout
     $.ajax({
         method: "POST",
         url: "/logout"
-    }).then(function(data) {
+    })
+    
+    //promise from server for logout.  Hiding and showing data after.
+    .then(function(data) {
         $("#logout").hide()
         $("#loginButton").show()
         $("#signupButton").show()
@@ -56,7 +72,10 @@ $(document).on("click", "#logout", function() {
     })
 })
 
+//Click handler for login attempt
 $(document).on("click", "#login", function() {
+
+    //Building out our data object with input values from user.
     let email = $("#loginUsername").val()
     let password = $("#loginPassword").val()
     let data = {
@@ -64,20 +83,27 @@ $(document).on("click", "#login", function() {
         password: password
     }
     console.log(data)
+
+    //AJAX post request for login.  Passing data object built above.
     $.ajax({
         method: "POST",
         url: "/login",
         data: data
-    }).then(function(data) {
+    })
+    
+    //Promise from server for login function.
+    .then(function(data) {
         console.log(data)
+
+        //Validating if there was a successful email login.  If yes then display users email
         if (data.email) {
             $("#signedIn").show().text("Signed in as " + data.email)
             $("#loginDiv").hide()
             $("#signupButton").hide()
             $("#logout").show()
-            // window.localStorage.setItem("user", data.uid)
             document.cookie = "uid=" + data.uid
         }
+        //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
         else {
             alert(data)
         }
