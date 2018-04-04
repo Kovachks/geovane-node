@@ -2,6 +2,7 @@ $(document).ready(function() {
     $("#signupDiv").hide()
     $("#loginDiv").hide()
     $("#logout").hide()
+    $("#newTrip").hide()
 })
 
 $(document).on('click', "#signupButton", function() {

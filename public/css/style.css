@@ -1,6 +1,18 @@
+#resultsContainer {
+    display: block;
+    width: 70%;
+    margin: 10px auto;
+}
 #map {
+    display: block;
     height: 400px;
-    width: 100%
+    width: 100%;
+    margin: 0 auto 10px auto;
+
+}
+#tripDistance {
+    display: block;
+    margin: 0 auto;
 }
 #signedIn {
     display: none;

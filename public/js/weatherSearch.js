@@ -5,6 +5,9 @@ $(document).on("click", "#search", function() {
     let endCity = $("#endCity").val()
     let endState = $("#endState").val()
     let user = window.localStorage.getItem("user")
+    $("#searchDiv").hide()
+    $("#newTrip").show()
+    $("#resultsContainer").show()
 
     var searchData = {
         startCity: startCity,
@@ -13,6 +16,11 @@ $(document).on("click", "#search", function() {
         endState: endState,
         user: user
     } 
+    document.getElementById("startCity").value = ""
+    document.getElementById("startState").value = ""
+    document.getElementById("endCity").value = ""
+    document.getElementById("endState").value = ""
+
     console.log(searchData)
     $.ajax({
         method: "POST",
@@ -23,24 +31,24 @@ $(document).on("click", "#search", function() {
         var tripdata = $()
         initMap(data)
         var tableData = $("#tr")
-        $("#tripDistance").html('<table><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + data.startTemperature + '</td><td>0</td></tr>')
+        $("#tripDistance").html('<table><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
+         data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>0</td></tr>')
         
         for (var i = 0; i < data.allSteps.length; i += 1) {
             var counter = i + 1
-            $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather + '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' + data.allSteps[i].currentTemp + '</td><td>' + data.allSteps[i].time + '</td></tr>')
+            $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
+             '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
+              Math.round(data.allSteps[i].currentTemp) + '</td><td>' + data.allSteps[i].time + '</td></tr>')
         }
         
-        
-        $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity + '</td><td>' + data.endTemperature + '</td><td>' + data.tripTimeMinutes + '</td></tr></table>')
-        // $("#tripDistance").html("The current temperature of " + data.startCity + " is: " + data.startTemperature + "F and the current weather is: "+ data.startWeather + "<br>"
-        //  + "The current temperature of " + data.endCity + " is: " + data.endTemperature + 'F and the current weather is: ' + data.endWeather)
-
-        //  for (var i = 0; i < data.allSteps.length; i += 1) {
-        //      var k = i + 1
-        //      $("#tripDistance").append("<br>Step " + k + " Current Temp: " + data.allSteps[i].currentTemp + "current weather: " + data.allSteps[i].currentWeather)
-        //      }
-
+        $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
+         '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + data.tripTimeMinutes + '</td></tr></table>')
     })
+})
+
+$(document).on("click", "#newTrip", function() {
+    $("#searchDiv").show()
+    $("#resultsContainer").hide()
 })
 
 function initMap(data) {
