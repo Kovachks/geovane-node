@@ -31,7 +31,7 @@ $(document).on("click", "#search", function() {
         var tripdata = $()
         initMap(data)
         var tableData = $("#tr")
-        $("#tripDistance").html('<table><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
+        $("#tripDistance").html('<table id="resultsTable"><tbody id="resultsTableBody"><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
          data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>0</td></tr>')
         
         for (var i = 0; i < data.allSteps.length; i += 1) {
@@ -42,7 +42,7 @@ $(document).on("click", "#search", function() {
         }
         
         $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
-         '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + data.tripTimeMinutes + '</td></tr></table>')
+         '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + data.tripTimeMinutes + '</td></tr></tbody></table>')
     })
 })
 

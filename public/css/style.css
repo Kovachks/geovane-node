@@ -5,10 +5,18 @@
 }
 #map {
     display: block;
-    height: 400px;
+    height: 500px;
     width: 100%;
     margin: 0 auto 10px auto;
 
+}
+#resultsTable {
+    display: block;
+    width: 400px;
+    margin: 10px auto 0 auto;
+}
+#resultsTableBody {
+    width: 100%;
 }
 #tripDistance {
     display: block;
