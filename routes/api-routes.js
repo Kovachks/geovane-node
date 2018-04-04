@@ -158,21 +158,61 @@ function weatherLoop(trip, sendData, res) {
     var j = 0
     var tripTime = 0
     sendData["allSteps"] = []
-    for(var i = 0; i <= trip.steps.length -1; i += 1) {
-        if (trip.steps[i].distance.value > 30000) {
-            tripTime = tripTime + trip.steps[i].duration.value
-            sendData.allSteps[j] = {
-                stepDistanceMeter: trip.steps[i].distance.value,
-                stepDistanceMiles: trip.steps[i].distance.text,
-                stepLat: trip.steps[i].start_location.lat,
-                stepLng: trip.steps[i].start_location.lng,
-                time: tripTime
+    if (sendData.tripTime <= 2) {
+        for(var i = 0; i <= trip.steps.length -1; i += 1) {
+            if (trip.steps[i].distance.value > 6000) {
+                tripTime = tripTime + trip.steps[i].duration.value
+                sendData.allSteps[j] = {
+                    stepDistanceMeter: trip.steps[i].distance.value,
+                    stepDistanceMiles: trip.steps[i].distance.text,
+                    stepLat: trip.steps[i].start_location.lat,
+                    stepLng: trip.steps[i].start_location.lng,
+                    time: tripTime
+                }
+                j += 1
+                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+            } else {
+                tripTime = tripTime + trip.steps[i].duration.value
+                console.log("This is not greater: " + trip.steps[i].distance.value)
             }
-            j += 1
-            console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
-        } else {
-            tripTime = tripTime + trip.steps[i].duration.value
-            console.log("This is not greater: " + trip.steps[i].distance.value)
+        }
+    }
+    else if (sendData.tripTime > 2 && sendData.tripTime <=8) {
+        for(var i = 0; i <= trip.steps.length -1; i += 1) {
+            if (trip.steps[i].distance.value > 30000) {
+                tripTime = tripTime + trip.steps[i].duration.value
+                sendData.allSteps[j] = {
+                    stepDistanceMeter: trip.steps[i].distance.value,
+                    stepDistanceMiles: trip.steps[i].distance.text,
+                    stepLat: trip.steps[i].start_location.lat,
+                    stepLng: trip.steps[i].start_location.lng,
+                    time: tripTime
+                }
+                j += 1
+                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+            } else {
+                tripTime = tripTime + trip.steps[i].duration.value
+                console.log("This is not greater: " + trip.steps[i].distance.value)
+            }
+        }
+    }
+    else if (sendData.tripTime > 8) {
+        for(var i = 0; i <= trip.steps.length -1; i += 1) {
+            if (trip.steps[i].distance.value > 60000) {
+                tripTime = tripTime + trip.steps[i].duration.value
+                sendData.allSteps[j] = {
+                    stepDistanceMeter: trip.steps[i].distance.value,
+                    stepDistanceMiles: trip.steps[i].distance.text,
+                    stepLat: trip.steps[i].start_location.lat,
+                    stepLng: trip.steps[i].start_location.lng,
+                    time: tripTime
+                }
+                j += 1
+                console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+            } else {
+                tripTime = tripTime + trip.steps[i].duration.value
+                console.log("This is not greater: " + trip.steps[i].distance.value)
+            }
         }
     }
     // console.log(sendData.allSteps.length)
@@ -205,17 +245,13 @@ function cityLookup(res, sendData) {
         
         sendData.allSteps[i].cityInfo = cities.gps_lookup(sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng)
         
-            k--
-            if (k == 0) {
+        k--
+        
+        if (k == 0) {
                 done(res, sendData)
-            }
-        // }
-        // geocoder.reverseGeocode(sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng, function(err, data) {
-        //     console.log(err)
-        //     // console.log(data.results[0].address_components[1])
-        //     sendData.allSteps[i].city = data.results[0].address_components[1].short_name
         }
     }
+}
 
 
 function done(res, sendData) {
