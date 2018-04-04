@@ -48,6 +48,7 @@ $(document).on("click", "#search", function() {
 
 $(document).on("click", "#newTrip", function() {
     $("#searchDiv").show()
+    $("#newTrip").hide()
     $("#resultsContainer").hide()
 })
 
