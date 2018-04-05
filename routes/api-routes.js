@@ -103,15 +103,8 @@ module.exports = function(app) {
 
 var temperature
 
-//Placeholder for function to embed map data
-function googleMapsDirectionEmbed(data) {
-
-}
-
-
 //Querying google Directions API to grab route data
 function googleDirections(data, res) {
-    console.log(cities.gps_lookup(35,-79))
     googleMapsClient.createClient({
         key: apiKey
     }).directions({
@@ -165,7 +158,7 @@ function weatherLoop(trip, sendData, res) {
     // console.log(trip.steps)
     sendData["allSteps"] = []
     if (sendData.tripTime <= 2) {
-        weatherLoopCall(trip, sendData, res, 6000)
+        weatherLoopCall(trip, sendData, res, 15000)
     }
     else if (sendData.tripTime > 2 && sendData.tripTime <=8) {
         weatherLoopCall(trip, sendData, res, 30000)
@@ -182,18 +175,20 @@ function weatherLoop(trip, sendData, res) {
 function weatherLoopCall(trip, sendData, res, distance) {
     var j = 0
     var tripTime = 0
-    for(var i = 0; i <= trip.steps.length -1; i += 1) {
+    console.log(trip.steps[8])
+    console.log("trip array length" + trip.steps.length)
+    for(var i = 0; i < trip.steps.length; i += 1) {
         if (trip.steps[i].distance.value > distance) {
             tripTime = tripTime + trip.steps[i].duration.value
             sendData.allSteps[j] = {
                 stepDistanceMeter: trip.steps[i].distance.value,
                 stepDistanceMiles: trip.steps[i].distance.text,
-                stepLat: trip.steps[i].start_location.lat,
-                stepLng: trip.steps[i].start_location.lng,
+                stepLat: trip.steps[i].end_location.lat,
+                stepLng: trip.steps[i].end_location.lng,
                 time: tripTime
             }
             j += 1
-            console.log("This is greater than 8000meters: " + trip.steps[i].distance.value)
+            console.log("This is greater than " + distance + " meters: " + trip.steps[i].distance.value)
         } else {
             tripTime = tripTime + trip.steps[i].duration.value
             console.log("This is not greater: " + trip.steps[i].distance.value)

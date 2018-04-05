@@ -1,23 +1,24 @@
 #resultsContainer {
+    width: 95%;
     display: block;
-    width: 70%;
-    margin: 10px auto;
+    margin: 20px auto;
+}
+.container {
+    max-width: 100%;
 }
 #map {
     display: block;
     height: 500px;
-    width: 100%;
     margin: 0 auto 10px auto;
-
 }
-#resultsTable {
+/* #resultsTable {
     display: block;
-    width: 500px;
+    width: 80%;
     margin: 10px auto 0 auto;
-}
-#resultsTableBody {
+} */
+/* #resultsTableBody {
     width: 100%;
-}
+} */
 #tripDistance {
     display: block;
     margin: 0 auto;
@@ -26,11 +27,11 @@
     display: none;
 }
 
-table{
+/* table{
     border: 1px solid black
-}
+} */
 
-tr {
+/* tr {
     border: 1px solid black
 }
 th {
@@ -38,4 +39,4 @@ th {
 }
 td {
     border: 1px solid black
-}
+} */

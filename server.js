@@ -24,8 +24,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
   });
 
-console.log(user)
-
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

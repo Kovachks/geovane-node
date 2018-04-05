@@ -39,7 +39,7 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
         //Creating html string to embed table with results from server response
-        $("#tripDistance").html('<table id="resultsTable"><tbody id="resultsTableBody"><tr><th>Step</th><th>Icon</th><th>Location</th><th>Temperature</th><th>Precip %</th><th>Time(Minutes)</th></tr><tr><td>Start</td><td><img src="./images/' +
+        $("#tripDistance").html('<table class="table"><thead class="thead-dark"><tr><th scope="col">Step</th><th>Icon</th><th scope="col">Location</th><th scope="col">Temperature</th><th scope="col">Precip %</th><th scope="col">Time(Minutes)</th></tr></thead><tbody><tr><td>Start</td><td><img src="./images/' +
          data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>0</td></tr>')
         
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
