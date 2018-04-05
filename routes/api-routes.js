@@ -131,6 +131,8 @@ function weatherCall(trip, sendData, res) {
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
          console.log(weather)
+
+        //Setting initial data for start and end trips
         sendData.startTemperature = weather.currently.temperature
         sendData.startCity = trip.start_address
         sendData.startGps = trip.start_location
@@ -168,7 +170,16 @@ function weatherLoop(trip, sendData, res) {
     }
     // console.log(sendData.allSteps.length)
     // console.log(sendData)
+
+    //If there are steps send them to the weather loop
+    if (sendData.allSteps[0]) {
     weatherLoopQuery(sendData, res)
+    }
+    
+    //Otherwise send all data back to the client
+    else {
+    res.send(sendData)
+    }
 }
 
 //Really bad function name.  Fix later
@@ -177,20 +188,29 @@ function weatherLoopCall(trip, sendData, res, distance) {
     var tripTime = 0
     console.log(trip.steps[8])
     console.log("trip array length" + trip.steps.length)
+
+    //Looping through each step to determine if step is worth grabbing weather data for
     for(var i = 0; i < trip.steps.length; i += 1) {
+
+        //Adding current steps time to variable storing combined trip duration
+        tripTime = tripTime + trip.steps[i].duration.value
+
+        //Checking step distance against predetermined distance metric
         if (trip.steps[i].distance.value > distance) {
-            tripTime = tripTime + trip.steps[i].duration.value
-            sendData.allSteps[j] = {
-                stepDistanceMeter: trip.steps[i].distance.value,
-                stepDistanceMiles: trip.steps[i].distance.text,
-                stepLat: trip.steps[i].end_location.lat,
-                stepLng: trip.steps[i].end_location.lng,
-                time: tripTime
+            console.log(sendData.tripTimeMinutes - (tripTime/60))
+            //Checking to see if step is too close to end destination
+            if(sendData.tripTimeMinutes - (tripTime/60) > 20) {
+                sendData.allSteps[j] = {
+                    stepDistanceMeter: trip.steps[i].distance.value,
+                    stepDistanceMiles: trip.steps[i].distance.text,
+                    stepLat: trip.steps[i].end_location.lat,
+                    stepLng: trip.steps[i].end_location.lng,
+                    time: tripTime
+                }
             }
             j += 1
             console.log("This is greater than " + distance + " meters: " + trip.steps[i].distance.value)
         } else {
-            tripTime = tripTime + trip.steps[i].duration.value
             console.log("This is not greater: " + trip.steps[i].distance.value)
         }
     }
@@ -222,20 +242,19 @@ function cityLookup(res, sendData) {
     let k = sendData.allSteps.length
     for (let i = 0; i < sendData.allSteps.length; i += 1) {
         
+        //Setting the cityinfo key inside the current step with the cities info pulled from smart-cities
         sendData.allSteps[i].cityInfo = cities.gps_lookup(sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng)
         
         k--
         
         if (k == 0) {
-                done(res, sendData)
+            done(res, sendData)
         }
     }
 }
 
-
+//Simple function to end server response
 function done(res, sendData) {
-    // console.log(sendData.allSteps[0].cityInfo)
-    // console.log("this is the final sendData: " + JSON.stringify(sendData))
     res.send(sendData)
 }
 

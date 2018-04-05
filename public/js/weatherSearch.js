@@ -107,13 +107,15 @@ function initMap(data) {
         icon: "./images/" + data.endWeather + ".png"
     })
 
+    if(markerObject[0]) {
     //Looping through our markerObject to create a new google maps marker with each identified step which qualifies
-    for (var i = 0; i < markerObject.length; i += 1) {
-        marker = new google.maps.Marker({
-            position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
-            map:map,
-            icon: "./images/" + markerObject[i].weather + ".png"
-        })
+        for (var i = 0; i < markerObject.length; i += 1) {
+            marker = new google.maps.Marker({
+                position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
+                map:map,
+                icon: "./images/" + markerObject[i].weather + ".png"
+            })
+        }
     }
 
     //Calling the display route function and passing it required arguments.
@@ -132,38 +134,55 @@ function displayRoute(origin, destination, service, display, markerObject) {
     var lateStop = parseInt(markerObject.length - 1); 
 
     //Setting the directions route and also adding in the waypoints defined above.
-    service.route({
-      origin: origin,
-      destination: destination,
-      travelMode: 'DRIVING',
-      avoidTolls: true,
-      waypoints: [{
-          location: {lat: markerObject[midStop1].lat, lng: markerObject[midStop1].lng},
-          stopover: false
-      },
-      {
-          location: {lat: markerObject[midStop2].lat, lng: markerObject[midStop2].lng},
-          stopover: false
-      },
-      {
-        location: {lat: markerObject[midStop3].lat, lng: markerObject[midStop3].lng},
-        stopover: false
-    },
-    {
-        location: {lat: markerObject[midStop4].lat, lng: markerObject[midStop4].lng},
-        stopover: false
-    },
-    {
-        location: {lat: markerObject[lateStop].lat, lng: markerObject[lateStop].lng},
-        stopover: false
-    }
-    ]
+    
+    if (markerObject[0]) {
+        service.route({
+        origin: origin,
+        destination: destination,
+        travelMode: 'DRIVING',
+        avoidTolls: true,
+        waypoints: [{
+            location: {lat: markerObject[midStop1].lat, lng: markerObject[midStop1].lng},
+            stopover: false
+        },
+        {
+            location: {lat: markerObject[midStop2].lat, lng: markerObject[midStop2].lng},
+            stopover: false
+        },
+        {
+            location: {lat: markerObject[midStop3].lat, lng: markerObject[midStop3].lng},
+            stopover: false
+        },
+        {
+            location: {lat: markerObject[midStop4].lat, lng: markerObject[midStop4].lng},
+            stopover: false
+        },
+        {
+            location: {lat: markerObject[lateStop].lat, lng: markerObject[lateStop].lng},
+            stopover: false
+        }
+        ]
 
-    }, function(response, status) {
-      if (status === 'OK') {
-        display.setDirections(response);
-      } else {
-        alert('Could not display directions due to: ' + status);
-      }
-    });
+        }, function(response, status) {
+        if (status === 'OK') {
+            display.setDirections(response);
+        } else {
+            alert('Could not display directions due to: ' + status);
+        }
+        });
+    } 
+    else {
+        service.route({
+            origin: origin,
+            destination: destination,
+            travelMode: 'DRIVING',
+            avoidTolls: true
+        }, function(response, status) {
+            if (status === 'OK') {
+                display.setDirections(response);
+            } else {
+                alert('Could not display directions due to: ' + status);
+            }
+        });
+    }
 }
