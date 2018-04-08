@@ -1,5 +1,4 @@
 #resultsContainer {
-    width: 95%;
     display: block;
     margin: 20px auto;
 }
@@ -30,3 +29,4 @@
 #signupDiv {
     display: none;
 }
+
