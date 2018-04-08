@@ -1,11 +1,3 @@
-//Initial loading of our page and hide elements that aren't needed on page load... Looking to remove this with css when I get to it
-$(document).ready(function() {
-    $("#signupDiv").hide()
-    $("#loginDiv").hide()
-    $("#logout").hide()
-    $("#newTrip").hide()
-})
-
 //Displaying input fields for signing up
 $(document).on('click', "#signupButton", function() {
     $("#loginButton").show()

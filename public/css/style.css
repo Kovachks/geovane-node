@@ -11,14 +11,6 @@
     height: 500px;
     margin: 0 auto 10px auto;
 }
-/* #resultsTable {
-    display: block;
-    width: 80%;
-    margin: 10px auto 0 auto;
-} */
-/* #resultsTableBody {
-    width: 100%;
-} */
 #tripDistance {
     display: block;
     margin: 0 auto;
@@ -26,17 +18,15 @@
 #signedIn {
     display: none;
 }
-
-/* table{
-    border: 1px solid black
-} */
-
-/* tr {
-    border: 1px solid black
+#newTrip {
+    display: none;
 }
-th {
-    border: 1px solid black
+#logout {
+    display: none;
 }
-td {
-    border: 1px solid black
-} */
+#loginDiv {
+    display: none;
+}
+#signupDiv {
+    display: none;
+}

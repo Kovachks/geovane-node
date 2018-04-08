@@ -114,6 +114,7 @@ function googleDirections(data, res) {
 
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
+        console.log(trip)
 
         //Storing total triptime for use later with weather calls in order to time delay weather information
         sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)

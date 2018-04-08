@@ -135,6 +135,7 @@ function displayRoute(origin, destination, service, display, markerObject) {
 
     //Setting the directions route and also adding in the waypoints defined above.
     
+    //Setting waypoints if there are actually 
     if (markerObject[0]) {
         service.route({
         origin: origin,
@@ -170,7 +171,9 @@ function displayRoute(origin, destination, service, display, markerObject) {
             alert('Could not display directions due to: ' + status);
         }
         });
-    } 
+    }
+    
+    //If marker is object render map without waypoints
     else {
         service.route({
             origin: origin,
