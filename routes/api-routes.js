@@ -1,4 +1,4 @@
-//Requirements
+//NPM's
 var router = require("express").Router();
 var firebase = require("firebase")
 var config = require("../config/config.js")
@@ -8,9 +8,11 @@ var weather = require('weather-js')
 var Forecast = require('forecast')
 var passwordHash = require('password-hash')
 var geocoder = require('geocoder')
+var cities = require('smart-city-finder')
+var geoTz= require('geo-tz')
+
 //Global Variables
 var database = firebase.database()
-var cities = require('smart-city-finder')
 var apiKey = config.googleDirectionsApiKey
 var sendData = {}
 
@@ -141,6 +143,8 @@ function weatherCall(trip, sendData, res) {
         sendData.endCity = trip.end_address
         sendData.endGps = trip.end_location
         sendData.startPrecip = weather.currently.precipProbability
+        sendData.startTimezone = geoTz.tz(trip.start_location.lat, trip.start_location.lng)
+        sendData.endTimezone = geoTz.tz(trip.end_location.lat, trip.end_location.lng)
     
         //Weather call for End City
         forecast.get([trip.end_location.lat, trip.end_location.lng],sendData, function(err, weather) {
@@ -206,7 +210,8 @@ function weatherLoopCall(trip, sendData, res, distance) {
                     stepDistanceMiles: trip.steps[i].distance.text,
                     stepLat: trip.steps[i].end_location.lat,
                     stepLng: trip.steps[i].end_location.lng,
-                    time: tripTime
+                    time: tripTime,
+                    stepTimeZone: geoTz.tz(trip.steps[i].end_location.lat,trip.steps[i].end_location.lng)
                 }
             }
             j += 1
