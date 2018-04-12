@@ -99,8 +99,18 @@ function initMap(data) {
     var marker = new google.maps.Marker({
       position: data.startGps,
       map: map,
-      icon: "./images/" + data.startWeather + ".png"
+      icon: "./images/testMarker1.png"
+    //   icon: "./images/" + data.startWeather + ".png"
     });
+
+    marker = new google.maps.Marker({
+        position: data.startGps,
+        map: map,
+        icon: {
+            url: "./images/testMarker2.png",
+            anchor: new google.maps.Point(20,0)
+        }
+    })
 
     //Creating a marker for the end of the trip
     marker = new google.maps.Marker({
