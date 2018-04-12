@@ -74,7 +74,8 @@ function initMap(data) {
         markerObject[i] = {
             lat: data.allSteps[i].stepLat,
             lng: data.allSteps[i].stepLng,
-            weather: data.allSteps[i].currentWeather
+            weather: data.allSteps[i].currentWeather,
+            temp: data.allSteps[i].currentTemp
         }
     }
     console.log(markerObject)
@@ -99,15 +100,15 @@ function initMap(data) {
     var marker = new google.maps.Marker({
       position: data.startGps,
       map: map,
-      icon: "./images/testMarker1.png"
-    //   icon: "./images/" + data.startWeather + ".png"
+    //   icon: "./images/testMarker1.png"
+      icon: "./images/" + data.startWeather + ".png"
     });
 
     marker = new google.maps.Marker({
         position: data.startGps,
         map: map,
         icon: {
-            url: "./images/testMarker2.png",
+            url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + Math.round(data.startTemperature) + ".png",
             anchor: new google.maps.Point(20,0)
         }
     })
@@ -119,6 +120,15 @@ function initMap(data) {
         icon: "./images/" + data.endWeather + ".png"
     })
 
+    marker = new google.maps.Marker({
+        position: data.endGps,
+        map: map,
+        icon: {
+            url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + Math.round(data.endTemperature) + ".png",
+            anchor: new google.maps.Point(20,0)
+        }
+    })
+
     if(markerObject[0]) {
     //Looping through our markerObject to create a new google maps marker with each identified step which qualifies
         for (var i = 0; i < markerObject.length; i += 1) {
@@ -126,6 +136,17 @@ function initMap(data) {
                 position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
                 map:map,
                 icon: "./images/" + markerObject[i].weather + ".png"
+            })
+
+            let markerTemp = Math.round(markerObject[i].temp)
+
+            marker = new google.maps.Marker({
+                position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
+                map: map,
+                icon: {
+                    url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + markerTemp + ".png",
+                    anchor: new google.maps.Point(20,0)
+                }
             })
         }
     }
