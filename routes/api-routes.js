@@ -95,6 +95,8 @@ module.exports = function(app) {
 
         //Storing data passed from AJAX
         var data = req.body
+
+        //This definitely needs to be moved.  Reorder of where sendData is first called
         sendData.options = req.body.options
 
         //Setting firebase data with new search paramaters

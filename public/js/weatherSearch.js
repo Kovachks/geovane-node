@@ -100,7 +100,7 @@ function initMap(data) {
         suppressMarkers: true
     });
 
-    //Creating a marker for the start of the trip
+    //Creating weather marker for the start of the trip
     var marker = new google.maps.Marker({
       position: data.startGps,
       map: map,
@@ -108,6 +108,7 @@ function initMap(data) {
       icon: "./images/" + data.startWeather + ".png"
     });
 
+    //Creating temperature marker for the start of the trip
     marker = new google.maps.Marker({
         position: data.startGps,
         map: map,
@@ -117,13 +118,14 @@ function initMap(data) {
         }
     })
 
-    //Creating a marker for the end of the trip
+    //Creating weather marker for the end of the trip
     marker = new google.maps.Marker({
         position: data.endGps,
         map: map,
         icon: "./images/" + data.endWeather + ".png",
     })
 
+    //Creating temperature marker for the end of the trip
     marker = new google.maps.Marker({
         position: data.endGps,
         map: map,
@@ -133,6 +135,7 @@ function initMap(data) {
         }
     })
 
+    //If traffic options is checked overlay traffic data from Google Maps (I think this needs to be moved somewhere more logical)
     if (data.options.traffic === "on") {
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
