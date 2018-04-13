@@ -117,7 +117,7 @@ function initMap(data) {
     marker = new google.maps.Marker({
         position: data.endGps,
         map: map,
-        icon: "./images/" + data.endWeather + ".png"
+        icon: "./images/" + data.endWeather + ".png",
     })
 
     marker = new google.maps.Marker({
