@@ -95,6 +95,7 @@ module.exports = function(app) {
 
         //Storing data passed from AJAX
         var data = req.body
+        sendData.options = req.body.options
 
         //Setting firebase data with new search paramaters
         firebasePost(data, database)

@@ -6,6 +6,7 @@ $(document).on("click", "#search", function() {
     //Grabbing user entered data
     let startCity = $("#startCity").val()
     let endCity = $("#endCity").val()
+    let traffic = $("#traffic").val()
 
     //Also grabbing user token if logged in or from Session Storage
     let user = window.localStorage.getItem("user")
@@ -19,7 +20,10 @@ $(document).on("click", "#search", function() {
     var searchData = {
         startCity: startCity,
         endCity: endCity,
-        user: user
+        user: user,
+        options: {
+            traffic: traffic
+        }
     } 
 
     //Reseting values on our HTML page 
@@ -129,6 +133,11 @@ function initMap(data) {
         }
     })
 
+    if (data.options.traffic === "on") {
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+    }
+    
     if(markerObject[0]) {
     //Looping through our markerObject to create a new google maps marker with each identified step which qualifies
         for (var i = 0; i < markerObject.length; i += 1) {
@@ -174,7 +183,6 @@ function displayRoute(origin, destination, service, display, markerObject) {
         origin: origin,
         destination: destination,
         travelMode: 'DRIVING',
-        avoidTolls: true,
         waypoints: [{
             location: {lat: markerObject[midStop1].lat, lng: markerObject[midStop1].lng},
             stopover: false
@@ -211,8 +219,7 @@ function displayRoute(origin, destination, service, display, markerObject) {
         service.route({
             origin: origin,
             destination: destination,
-            travelMode: 'DRIVING',
-            avoidTolls: true
+            travelMode: 'DRIVING'
         }, function(response, status) {
             if (status === 'OK') {
                 display.setDirections(response);
