@@ -6,7 +6,8 @@ $(document).on("click", "#search", function() {
     //Grabbing user entered data
     let startCity = $("#startCity").val()
     let endCity = $("#endCity").val()
-    let traffic = $("#traffic").val()
+    let traffic = $("#traffic").is(":checked")
+    console.log(traffic)
 
     //Also grabbing user token if logged in or from Session Storage
     let user = window.localStorage.getItem("user")
@@ -136,7 +137,7 @@ function initMap(data) {
     })
 
     //If traffic options is checked overlay traffic data from Google Maps (I think this needs to be moved somewhere more logical)
-    if (data.options.traffic === "on") {
+    if (data.options.traffic === "true") {
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
     }
