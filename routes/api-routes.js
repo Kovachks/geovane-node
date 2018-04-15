@@ -10,6 +10,7 @@ var passwordHash = require('password-hash')
 var geocoder = require('geocoder')
 var cities = require('smart-city-finder')
 var geoTz= require('geo-tz')
+var admin = require('firebase-admin')
 
 //Global Variables
 var database = firebase.database()
@@ -28,7 +29,29 @@ var forecast = new Forecast({
     }
 });
 
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var displayName = user.displayName;
+      var email = user.email;
+      var emailVerified = user.emailVerified;
+      var photoURL = user.photoURL;
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      var providerData = user.providerData;
+      console.log("Test " + JSON.stringify(user))
+    } else {
+      // User is signed out.
+      // ...
+    }
+  });
+
 module.exports = function(app) {
+
+    app.post("/authenticate", function(req, res) {
+        console.log("this is the req.body: " + JSON.stringify(req.body))
+        admin.auth().getUser(req.body.data)
+    })
 
     app.post("/signup", function(req, res) {
         console.log(req.body)
@@ -105,8 +128,6 @@ module.exports = function(app) {
 
     })
 }
-
-var temperature
 
 //Querying google Directions API to grab route data
 function googleDirections(data, res) {

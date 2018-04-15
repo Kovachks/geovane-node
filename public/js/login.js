@@ -1,3 +1,25 @@
+if (localStorage.getItem("uid=")) {
+    console.log("this is a test fire for local storages")
+    $.ajax({
+        method: "POST",
+        url: "/authenticate",
+        data: localStorage.getItem("uid=")
+    })
+    .then(function(data) {
+        if (data.email) {
+            $("#signedIn").show().text("Signed in as " + data.email)
+            $("#loginDiv").hide()
+            $("#signupButton").hide()
+            $("#logout").show()
+            localStorage.setItem('uid=', data.uid)
+        }
+        //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
+        else {
+            alert(data)
+        }
+    })
+}
+
 //Displaying input fields for signing up
 $(document).on('click', "#signupButton", function() {
     $("#loginButton").show()
@@ -97,7 +119,7 @@ $(document).on("click", "#login", function() {
             $("#loginDiv").hide()
             $("#signupButton").hide()
             $("#logout").show()
-            document.cookie = "uid=" + data.uid
+            localStorage.setItem('uid=', data.uid)
         }
         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
         else {
