@@ -4,6 +4,8 @@ $(document).on('click', "#signupButton", function() {
     $("#loginDiv").hide()
     $("#signupDiv").show()
     $("#signupButton").hide()
+    $("#searchDiv").hide()
+    $("#newTrip").show()
 })
 
 //Displaying input fields for loging in
@@ -12,6 +14,7 @@ $(document).on('click', "#loginButton", function() {
     $("#signupDiv").hide()
     $("#loginDiv").show()
     $("#loginButton").hide()
+    $("#seearchDiv").hide()
 })
 
 //Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication

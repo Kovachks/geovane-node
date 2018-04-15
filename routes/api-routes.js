@@ -207,7 +207,7 @@ function weatherLoopCall(trip, sendData, res, distance) {
         if (trip.steps[i].distance.value > distance) {
             console.log(sendData.tripTimeMinutes - (tripTime/60))
             //Checking to see if step is too close to end destination
-            if(sendData.tripTimeMinutes - (tripTime/60) > 30) {
+            if(sendData.tripTimeMinutes - (tripTime/60) > 40) {
                 sendData.allSteps[j] = {
                     stepDistanceMeter: trip.steps[i].distance.value,
                     stepDistanceMiles: trip.steps[i].distance.text,

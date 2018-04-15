@@ -68,6 +68,10 @@ $(document).on("click", "#newTrip", function() {
     $("#searchDiv").show()
     $("#newTrip").hide()
     $("#resultsContainer").hide()
+    $("#signupDiv").hide()
+    $("#loginDiv").hide()
+    $("#signupButton").show()
+    $("#loginButton").show()
 })
 
 //Function for generating google map
