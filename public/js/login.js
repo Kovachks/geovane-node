@@ -1,4 +1,8 @@
 if (localStorage.getItem("uid=")) {
+
+    var data = {
+        uid: localStorage.getItem("uid=")
+    }
     console.log("this is a test fire for local storages")
     $.ajax({
         method: "POST",

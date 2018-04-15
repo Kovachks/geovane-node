@@ -10,7 +10,8 @@ var passwordHash = require('password-hash')
 var geocoder = require('geocoder')
 var cities = require('smart-city-finder')
 var geoTz= require('geo-tz')
-var admin = require('firebase-admin')
+var config = require("../config/config.js")
+// var config = require("../config/config.js")
 
 //Global Variables
 var database = firebase.database()
@@ -46,11 +47,27 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
   });
 
+//   firebase.initializeApp(config)
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("../config/geovane-820cc-firebase-adminsdk-pdyq3-ef6655f64e");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://geovane-820cc.firebaseio.com"
+});
+
+
 module.exports = function(app) {
 
     app.post("/authenticate", function(req, res) {
-        console.log("this is the req.body: " + JSON.stringify(req.body))
-        admin.auth().getUser(req.body.data)
+        
+        var test = Object.keys(req.body)
+        test.toString()
+        console.log("this is the req.body: " + typeof test)
+        admin.auth().getUser(Object.keys(test))
+
     })
 
     app.post("/signup", function(req, res) {
@@ -145,7 +162,6 @@ function googleDirections(data, res) {
         //Storing total triptime for use later with weather calls in order to time delay weather information
         sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)
         sendData.tripTimeMinutes = Math.round(response.json.routes[0].legs[0].duration.value /60)
-        // console.log(response.json.routes[0].legs[0])
 
         //Calling weather after response from directions API.  Passing it trip data and our res object along with our send data object
         weatherCall(trip, sendData, res)
@@ -197,8 +213,6 @@ function weatherLoop(trip, sendData, res) {
     else if (sendData.tripTime > 8) {        
         weatherLoopCall(trip, sendData, res, 60000)
     }
-    // console.log(sendData.allSteps.length)
-    // console.log(sendData)
 
     //If there are steps send them to the weather loop
     if (sendData.allSteps[0]) {
@@ -248,7 +262,6 @@ function weatherLoopCall(trip, sendData, res, distance) {
 
 
 function weatherLoopQuery(sendData, res) {
-    // console.log(JSON.stringify(sendData))
     let k = sendData.allSteps.length
     for (let i = 0; i < sendData.allSteps.length; i+= 1) {
         forecast.get([sendData.allSteps[i].stepLat, sendData.allSteps[i].stepLng], function(err, weather) {
