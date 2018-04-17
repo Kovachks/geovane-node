@@ -1,14 +1,22 @@
-$(document).ready(function() {
-    $(document).on("click", "#signupButton", function() {
-        $(".modal-content").html(
-            "<div class='modal-header'><h4>Singup</h4><button type='button' class='close'" +
-             "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-             "<div class='modal-body'><h5>Email</h5>" + 
-             "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
-             "</div><div class='modal-footer'><button id='signup'>Submit</button><button id='cancel'>Cancel</button></div>"
-        )
-    })    
+$(document).on("click", "#signupButton", function() {
+    $(".modal-content").html(
+        "<div class='modal-header'><h4>Singup</h4><button type='button' class='close'" +
+            "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+            "<div class='modal-body'><h5>Email</h5>" + 
+            "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
+            "</div><div class='modal-footer'><button id='signup'>Submit</button><button id='cancel'>Cancel</button></div>"
+    )
 })
+
+$(document).on("click", "#loginButton", function() {
+    $(".modal-content").html(
+        "<div class='modal-header'<h4>Login</h4><button type='button' class='close'" +
+        "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+        "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
+        "type='password' id='loginPassword'></div><div class='modal-footer'><button id='login'>Signin</button><button id='cancel'>Cacnel</button></div>"
+    )
+})
+
 
 // if (localStorage.getItem("uid=")) {
 //     var data = {
@@ -34,16 +42,6 @@ $(document).ready(function() {
 //         }
 //     })
 // }
-
-//Displaying input fields for loging in
-$(document).on('click', "#loginButton", function() {
-    $("#signupButton").show()
-    $("#signupDiv").hide()
-    $("#loginDiv").show()
-    $("#loginButton").hide()
-    $("#searchDiv").hide()
-    $("#newTrip").show()
-})
 
 //Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
 $(document).on("click", "#signup", function() {
@@ -102,7 +100,7 @@ $(document).on("click", "#logout", function() {
 $(document).on("click", "#login", function() {
 
     //Building out our data object with input values from user.
-    let email = $("#loginUsername").val()
+    let email = $("#loginEmail").val()
     let password = $("#loginPassword").val()
     let data = {
         email: email,
@@ -128,6 +126,7 @@ $(document).on("click", "#login", function() {
             $("#signupButton").hide()
             $("#logout").show()
             localStorage.setItem('uid=', data.uid)
+            $("#startModal").modal('hide')
         }
         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
         else {
