@@ -18,6 +18,25 @@ $(document).on("click", "#loginButton", function() {
 })
 
 
+if (sessionStorage.getItem('accessToken=')) {
+    var data = {
+        // uid: sessionStorage.getItem("uid="),
+        accessToken: sessionStorage.getItem("accessToken="),
+        // apiKey: sessionStorage.getItem("apiKey="),
+        // refreshToken: sessionStorage.getItem("refreshToken=")
+    }
+    $.ajax({
+        method: "POST",
+        url: "/authenticate",
+        data: data
+    })
+    .then(function(data) {
+        if (data.email) {
+            $("#signedIn").show().text("Signed in as " + data.email)
+        }
+    })
+}
+
 // if (localStorage.getItem("uid=")) {
 //     var data = {
 //         uid: localStorage.getItem("uid=")
@@ -120,12 +139,16 @@ $(document).on("click", "#login", function() {
         console.log(data)
 
         //Validating if there was a successful email login.  If yes then display users email
-        if (data.email) {
-            $("#signedIn").show().text("Signed in as " + data.email)
+        if (data) {
+            $("#signedIn").show().text("Signed in as ")
             $("#loginDiv").hide()
             $("#signupButton").hide()
             $("#logout").show()
-            localStorage.setItem('uid=', data.uid)
+            // localStorage.setItem('uid=', data.uid)
+            // sessionStorage.setItem('uid=', data.uid)
+            sessionStorage.setItem('accessToken=', data)
+            // sessionStorage.setItem('apiKey=', data.stsTokenManager.apiKey)
+            // sessionStorage.setItem('refreshToken=', data.stsTokenManager.refreshToken)
             $("#startModal").modal('hide')
         }
         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future

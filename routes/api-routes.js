@@ -30,7 +30,11 @@ var forecast = new Forecast({
     }
 });
 
+// As httpOnly cookies are to be used, do not persist any state client side.
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
 firebase.auth().onAuthStateChanged(function(user) {
+
     if (user) {
       // User is signed in.
       var displayName = user.displayName;
@@ -40,12 +44,14 @@ firebase.auth().onAuthStateChanged(function(user) {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
-      console.log("Test " + JSON.stringify(user))
+      console.log("Test " + JSON.stringify(email))
     } else {
       // User is signed out.
       // ...
     }
   });
+
+
 
 //   firebase.initializeApp(config)
 
@@ -62,12 +68,13 @@ admin.initializeApp({
 module.exports = function(app) {
 
     app.post("/authenticate", function(req, res) {
-        
-        var test = Object.keys(req.body)
-        test.toString()
-        console.log("this is the req.body: " + typeof test)
-        admin.auth().getUser(Object.keys(test))
-
+        console.log(req.body.accessToken)
+        firebase.auth().signInWithCustomToken(req.body.accessToken).then(function(user) {
+            console.log("This fired!!!")
+            res.send(user)
+        }).catch(function(error) {
+            console.log(error)
+        })
     })
 
     app.post("/signup", function(req, res) {
@@ -101,9 +108,9 @@ module.exports = function(app) {
         firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             var userCheck = firebase.auth().currentUser
             if (userCheck.emailVerified === true) {
-                user.hashPass = passwordHash.generate(req.body.password)
-                console.log(user.hashPass)
-                res.send(user)
+                  admin.auth().createCustomToken(user.uid).then(function(customToken) {
+                      res.send(customToken)
+                  })
             } else {
                 firebase.auth().signOut().then(function() {
                     res.send("Email Not Verified")

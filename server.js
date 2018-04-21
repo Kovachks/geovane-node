@@ -3,7 +3,6 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var firebase = require("firebase")
 var googleMapsClient = require('@google/maps')
-// var config = require('./config')
 require('firebase-admin')
 var config = require("./config/config.js")
 require("firebase/database")

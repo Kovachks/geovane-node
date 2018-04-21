@@ -118,7 +118,7 @@ function initMap(data) {
         position: data.startGps,
         map: map,
         icon: {
-            url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + Math.round(data.startTemperature) + ".png",
+            url: "./images/" + Math.round(data.startTemperature) + ".png",
             anchor: new google.maps.Point(20,0)
         }
     })
@@ -135,7 +135,7 @@ function initMap(data) {
         position: data.endGps,
         map: map,
         icon: {
-            url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + Math.round(data.endTemperature) + ".png",
+            url: "./images/" + Math.round(data.endTemperature) + ".png",
             anchor: new google.maps.Point(20,0)
         }
     })
@@ -161,7 +161,7 @@ function initMap(data) {
                 position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
                 map: map,
                 icon: {
-                    url: "http://res.cloudinary.com/djcwqbn0j/image/upload/v1523574917/" + markerTemp + ".png",
+                    url: "./images/" + markerTemp + ".png",
                     anchor: new google.maps.Point(20,0)
                 }
             })
