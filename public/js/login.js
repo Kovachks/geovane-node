@@ -32,35 +32,13 @@ if (sessionStorage.getItem('accessToken=')) {
     })
     .then(function(data) {
         if (data.email) {
+            $("#loginButton").hide()
+            $("#signupButton").hide()
+            $("#logout").show()
             $("#signedIn").show().text("Signed in as " + data.email)
         }
     })
 }
-
-// if (localStorage.getItem("uid=")) {
-//     var data = {
-//         uid: localStorage.getItem("uid=")
-//     }
-//     console.log("this is a test fire for local storages")
-//     $.ajax({
-//         method: "POST",
-//         url: "/authenticate",
-//         data: localStorage.getItem("uid=")
-//     })
-//     .then(function(data) {
-//         if (data.email) {
-//             $("#signedIn").show().text("Signed in as " + data.email)
-//             $("#loginDiv").hide()
-//             $("#signupButton").hide()
-//             $("#logout").show()
-//             localStorage.setItem('uid=', data.uid)
-//         }
-//         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
-//         else {
-//             alert(data)
-//         }
-//     })
-// }
 
 //Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
 $(document).on("click", "#signup", function() {
@@ -100,6 +78,8 @@ $(document).on("click", "#signup", function() {
 //Logout click handler
 $(document).on("click", "#logout", function() {
     
+    sessionStorage.removeItem('accessToken=')
+
     //AJAX post route for logout
     $.ajax({
         method: "POST",
@@ -140,8 +120,9 @@ $(document).on("click", "#login", function() {
 
         //Validating if there was a successful email login.  If yes then display users email
         if (data) {
-            $("#signedIn").show().text("Signed in as ")
+            
             $("#loginDiv").hide()
+            $("#loginButton").hide()
             $("#signupButton").hide()
             $("#logout").show()
             // localStorage.setItem('uid=', data.uid)
@@ -150,6 +131,23 @@ $(document).on("click", "#login", function() {
             // sessionStorage.setItem('apiKey=', data.stsTokenManager.apiKey)
             // sessionStorage.setItem('refreshToken=', data.stsTokenManager.refreshToken)
             $("#startModal").modal('hide')
+                var data = {
+                    // uid: sessionStorage.getItem("uid="),
+                    accessToken: sessionStorage.getItem("accessToken="),
+                    // apiKey: sessionStorage.getItem("apiKey="),
+                    // refreshToken: sessionStorage.getItem("refreshToken=")
+                }
+                $.ajax({
+                    method: "POST",
+                    url: "/authenticate",
+                    data: data
+                })
+                .then(function(data) {
+                    if (data.email) {
+                        $("#signedIn").show().text("Signed in as " + data.email)
+                    }
+                })
+            
         }
         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
         else {

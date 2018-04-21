@@ -70,7 +70,6 @@ module.exports = function(app) {
     app.post("/authenticate", function(req, res) {
         console.log(req.body.accessToken)
         firebase.auth().signInWithCustomToken(req.body.accessToken).then(function(user) {
-            console.log("This fired!!!")
             res.send(user)
         }).catch(function(error) {
             console.log(error)
