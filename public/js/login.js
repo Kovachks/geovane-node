@@ -105,7 +105,6 @@ $(document).on("click", "#login", function() {
         email: email,
         password: password
     }
-    console.log(data)
 
     //AJAX post request for login.  Passing data object built above.
     $.ajax({
