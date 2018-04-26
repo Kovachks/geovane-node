@@ -11,8 +11,9 @@
     margin: 0 auto 10px auto;
 }
 #tripDistance {
-    display: block;
+    display: block; 
     margin: 0 auto;
+    height: 500px;
 }
 #signedIn {
     display: none;
@@ -29,4 +30,38 @@
 #signupDiv {
     display: none;
 }
-
+.modalTitle {
+    width: 30%;
+    margin-right: 0;
+    display: inline-block;
+}
+button {
+    margin: 0 5px;
+}
+.tableDisplay {
+    height: 400px;
+    border: 2px solid black;
+}
+.resultToggleDiv{
+    width:100%;
+    height: 98px;
+}
+.resultToggle{
+    display: inline-block;
+    margin: 0;
+    width: 25%;
+    height: 100%;
+    border: solid blue 2px;
+}
+.childDisplay{
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+}
+.parentDisplay {
+height: 400px;
+width: 100%;
+overflow: hidden;
+}

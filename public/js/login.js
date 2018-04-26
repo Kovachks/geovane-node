@@ -1,6 +1,6 @@
 $(document).on("click", "#signupButton", function() {
     $(".modal-content").html(
-        "<div class='modal-header'><h4>Singup</h4><button type='button' class='close'" +
+        "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
             "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
             "<div class='modal-body'><h5>Email</h5>" + 
             "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
@@ -10,10 +10,10 @@ $(document).on("click", "#signupButton", function() {
 
 $(document).on("click", "#loginButton", function() {
     $(".modal-content").html(
-        "<div class='modal-header'<h4>Login</h4><button type='button' class='close'" +
+        "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
         "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
         "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-        "type='password' id='loginPassword'></div><div class='modal-footer'><button id='login'>Signin</button><button id='cancel'>Cacnel</button></div>"
+        "type='password' id='loginPassword'></div><div class='modal-footer'><button id='login'>Signin</button><button id='cancel'>Cancel</button></div>"
     )
 })
 
@@ -93,6 +93,10 @@ $(document).on("click", "#logout", function() {
         $("#signupButton").show()
         $("#signedIn").hide().text()
     })
+})
+
+$(document).on("click", "#cancel", function() {
+    $("#startModal").modal('hide')
 })
 
 //Click handler for login attempt

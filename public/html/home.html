@@ -17,19 +17,6 @@
     <div class="modal fade" tabindex="-1" role="dialog" id='startModal'>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
@@ -69,17 +56,49 @@
             <br>
             <button id="search">Search</button>
         </div>
+        <!-- <div class="tableDisplay"> -->
+            <!-- <div class="resultToggleDiv">
+                <div class="resultToggle" id="weatherDisplay">
+                    <p>Weather</p>
+                </div>
+                <div class="resultToggle" id="stepDisplay">
+                    <p>Directions</p>
+                </div>
+            </div> -->
+        <!-- </div> -->
+    
         <div class="container" id="resultsContainer">
             <div class="row">
                 <div class="col-md-4" id="map"></div>
-                <div class="col-md-8" id="tripDistance"></div>
+                <div class="col-md-8 tableDisplay" id="tripDistance">
+                    <div class="resultToggleDiv">
+                        <div class="resultToggle" id="weatherToggle">
+                            <p>Weather</p>
+                        </div>
+                        <div class="resultToggle" id="stepToggle">
+                            <p>Directions</p>
+                        </div>
+                    </div>
+                    <div class="parentDisplay" id="weatherDisplayParent">
+                        <div class="childDisplay"id="weatherDisplay">
+
+                        </div>
+                    </div>
+                    <div class="parentDisplay" id="stepDisplayParent">
+                        <div class="childDisplay"id="stepDisplay">
+                            <h4>This is a test</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <h4>Copyright 2018</h4>
+
     <script src='./js/login.js'></script>
     <script src="./js/weatherSearch.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwWaAPX-1NaFqoxKrGmRanhc6MAbHaSNY"></script>
-    <h4>Copyright 2018</h4>
+
 
 </body>
 </html>

@@ -1,4 +1,16 @@
-console.log(moment.tz("2013-12-01", "America/Los_Angeles"))
+$(document).ready(function() {
+    $("#stepToggle").on("click", function() {
+        $("#weatherDisplayParent").hide()
+        $("#stepDisplayParent").show()
+    })
+
+    $("#weatherToggle").on("click", function() {
+        $("#stepDisplayParent").hide()
+        $("#weatherDisplayParent").show()
+    })
+
+    $("#stepDisplayParent").hide()
+})
 
 //Click handler for our main Search
 $(document).on("click", "#search", function() {
@@ -46,7 +58,7 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
         //Creating html string to embed table with results from server response
-        $("#tripDistance").html('<table class="table"><thead class="thead-dark"><tr><th scope="col">Step</th><th>Icon</th><th scope="col">Location</th><th scope="col">Temperature</th><th scope="col">Precip %</th><th scope="col">Arrival Time</th></tr></thead><tbody><tr><td>Start</td><td><img src="./images/' +
+        $("#weatherDisplay").html('<table class="table"><thead class="thead-dark"><tr><th scope="col">Step</th><th>Icon</th><th scope="col">Location</th><th scope="col">Temperature</th><th scope="col">Precip %</th><th scope="col">Arrival Time</th></tr></thead><tbody><tr><td>Start</td><td><img src="./images/' +
          data.startWeather + '.png"></td><td>' + data.startCity + '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr>')
         
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
@@ -61,6 +73,7 @@ $(document).on("click", "#search", function() {
         $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
          '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr></tbody></table>')
     })
+    
 })
 
 //Click handler for querying a new trip
