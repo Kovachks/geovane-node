@@ -163,8 +163,11 @@ function googleDirections(data, res) {
 
         //Storing main trip data as placeholder for easier use later
         var trip = response.json.routes[0].legs[0]
-        console.log(trip)
-
+        // console.log(trip)
+        console.log(response.json.routes[0].legs[0].steps[0])
+        console.log(response.json.routes[0].legs[0].steps.length)
+        sendData.directions = trip.steps
+        // console.log("This is a test" + sendData.directions)
         //Storing total triptime for use later with weather calls in order to time delay weather information
         sendData.tripTime = Math.round(response.json.routes[0].legs[0].duration.value /60 /60)
         sendData.tripTimeMinutes = Math.round(response.json.routes[0].legs[0].duration.value /60)
@@ -179,7 +182,7 @@ function googleDirections(data, res) {
 function weatherCall(trip, sendData, res) {
      //Weather call for Start City
      forecast.get([trip.start_location.lat, trip.start_location.lng], function(err, weather) {
-         console.log(weather)
+        //  console.log(weather)
 
         //Setting initial data for start and end trips
         sendData.startTemperature = weather.currently.temperature
@@ -235,8 +238,8 @@ function weatherLoop(trip, sendData, res) {
 function weatherLoopCall(trip, sendData, res, distance) {
     var j = 0
     var tripTime = 0
-    console.log(trip.steps[8])
-    console.log("trip array length" + trip.steps.length)
+    // console.log(trip.steps[8])
+    // console.log("trip array length" + trip.steps.length)
 
     //Looping through each step to determine if step is worth grabbing weather data for
     for(var i = 0; i < trip.steps.length; i += 1) {
@@ -246,7 +249,7 @@ function weatherLoopCall(trip, sendData, res, distance) {
 
         //Checking step distance against predetermined distance metric
         if (trip.steps[i].distance.value > distance) {
-            console.log(sendData.tripTimeMinutes - (tripTime/60))
+            // console.log(sendData.tripTimeMinutes - (tripTime/60))
             //Checking to see if step is too close to end destination
             if(sendData.tripTimeMinutes - (tripTime/60) > 40) {
                 sendData.allSteps[j] = {
@@ -259,9 +262,9 @@ function weatherLoopCall(trip, sendData, res, distance) {
                 }
             }
             j += 1
-            console.log("This is greater than " + distance + " meters: " + trip.steps[i].distance.value)
+            // console.log("This is greater than " + distance + " meters: " + trip.steps[i].distance.value)
         } else {
-            console.log("This is not greater: " + trip.steps[i].distance.value)
+            // console.log("This is not greater: " + trip.steps[i].distance.value)
         }
     }
 }
