@@ -87,7 +87,7 @@ $(document).on("click", "#newTrip", function() {
     $("#loginDiv").hide()
     $("#signupButton").show()
     $("#loginButton").show()
-    $("#weatherTable").clear()
+    $("#weatherDisplay table").empty()
 })
 
 //Function for generating google map
