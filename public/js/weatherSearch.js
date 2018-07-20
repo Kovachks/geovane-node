@@ -59,16 +59,19 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
 
+        $("#weatherDisplay table").append('<tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
+         '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr></tbody></table>')
+
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
         for (var i = 0; i < data.allSteps.length; i += 1) {
             var counter = i + 1
-            $("#tripDistance table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
+            $("#weatherDisplay table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
              '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
               Math.round(data.allSteps[i].currentTemp) + '</td><td>' + Math.round((data.allSteps[i].precip * 100)) + '%</td><td>' + moment().tz(data.allSteps[i].stepTimeZone).add(data.allSteps[i].time, 'm').format('LT') + ' ' + moment().tz(data.allSteps[i].stepTimeZone).zoneAbbr() + '</td></tr>')
         }
         
         //Finishing off the table with the end points data
-        $("#tripDistance table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
+        $("#weatherDisplay table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
          '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr></tbody></table>')
     })
     
@@ -84,6 +87,7 @@ $(document).on("click", "#newTrip", function() {
     $("#loginDiv").hide()
     $("#signupButton").show()
     $("#loginButton").show()
+    $("#weatherTable").clear()
 })
 
 //Function for generating google map

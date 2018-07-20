@@ -55,18 +55,7 @@
             <label for="traffic">Traffic Overlay</label>
             <br>
             <button id="search">Search</button>
-        </div>
-        <!-- <div class="tableDisplay"> -->
-            <!-- <div class="resultToggleDiv">
-                <div class="resultToggle" id="weatherDisplay">
-                    <p>Weather</p>
-                </div>
-                <div class="resultToggle" id="stepDisplay">
-                    <p>Directions</p>
-                </div>
-            </div> -->
-        <!-- </div> -->
-    
+        </div>    
         <div class="container" id="resultsContainer">
             <div class="row">
                 <div class="col-md-4" id="map"></div>
@@ -81,7 +70,9 @@
                     </div>
                     <div class="parentDisplay" id="weatherDisplayParent">
                         <div class="childDisplay"id="weatherDisplay">
+                            <table id='weatherTable'>
 
+                            </table>
                         </div>
                     </div>
                     <div class="parentDisplay" id="stepDisplayParent">
@@ -94,11 +85,9 @@
         </div>
     </div>
     <h4>Copyright 2018</h4>
-
     <script src='./js/login.js'></script>
     <script src="./js/weatherSearch.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwWaAPX-1NaFqoxKrGmRanhc6MAbHaSNY"></script>
-
-
+    <script src='./js/autoComplete.js'></script>
 </body>
 </html>
