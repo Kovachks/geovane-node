@@ -59,7 +59,7 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
 
-        $("#weatherDisplay table").append('<tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
+        $("#weatherDisplay table").append('<tr><td>Step</td><td>Weather</td><td>Location</td><td>Temperature</td><td>Precipitation</td><td>Arrival Time</td></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
          '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr></tbody></table>')
 
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
