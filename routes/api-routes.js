@@ -138,7 +138,6 @@ module.exports = function(app) {
 
     //Fired on submission of primary search
     app.post("/search", function(req, res) {
-
         //Storing data passed from AJAX
         var data = req.body
 
@@ -154,6 +153,7 @@ module.exports = function(app) {
 
 //Querying google Directions API to grab route data
 function googleDirections(data, res) {
+    console.log("test")
     googleMapsClient.createClient({
         key: apiKey
     }).directions({
