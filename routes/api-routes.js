@@ -13,9 +13,10 @@ var geoTz= require('geo-tz')
 var config = require("../config/config.js")
 // var config = require("../config/config.js")
 
+
 //Global Variables
 var database = firebase.database()
-var apiKey = config.googleDirectionsApiKey
+var apiKey = process.env.googleDirectionsApiKey
 var sendData = {}
 
 // Initialize new forecast object to call weather info

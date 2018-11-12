@@ -10,6 +10,8 @@ require("firebase/auth")
 var app = express();
 var PORT = process.env.PORT || 8000;
 
+console.log(process.env)
+
 //Initializing firebase application
 firebase.initializeApp(config);
 
