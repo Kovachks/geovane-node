@@ -9,6 +9,7 @@ require("firebase/database")
 require("firebase/auth")
 var app = express();
 var PORT = process.env.PORT || 8000;
+require('dotenv').config();
 
 console.log(process.env)
 
