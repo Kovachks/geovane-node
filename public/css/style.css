@@ -15,6 +15,9 @@
     margin: 0 auto;
     height: 500px;
 }
+#stepToggle {
+    margin: -5px;
+}
 #signedIn {
     display: none;
 }
@@ -55,7 +58,7 @@ button {
 .resultToggle{
     display: inline-block;
     margin: 0;
-    width: 25%;
+    width: 49%;
     height: 100%;
     background-color: grey;
 }
@@ -71,4 +74,14 @@ height: 400px;
 padding: 5px;
 width: 100%;
 overflow: hidden;
+}
+.toggleTitle {
+    height: 100%;
+    text-align: center;
+    margin-top: 10%;
+    font-size: 25px;
+}
+.selected {
+    border: 2px solid black;
+    font-weight: bold;
 }

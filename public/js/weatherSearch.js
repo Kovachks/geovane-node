@@ -5,6 +5,7 @@ $(document).ready(function() {
     })
 
     $("#weatherToggle").on("click", function() {
+        console.log("this is a button test")
         $("#stepDisplayParent").hide()
         $("#weatherDisplayParent").show()
     })
