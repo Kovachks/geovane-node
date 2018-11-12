@@ -117,22 +117,30 @@ module.exports = function(app) {
                 })
             }
         }).catch(function(error) {
+            data = {}
             // Handle Errors here.
+            console.log(error)
             var errorCode = error.code;
             var errorMessage = error.message;
+            data.success = 0
             console.log(errorMessage)
             if (errorMessage === "There is no user record corresponding to this identifier. The user may have been deleted."){
-                res.send("No user with that login email")
+                data.message = "No user with that login email"
+                res.send(data)
                 }
             else if (errorMessage === "The email address is badly formatted.") {
-                    res.send("Please enter a valid email")
+                    data.message = "Please enter a valid email" 
+                    res.send(data)
             } 
             else if (errorMessage === "The password is invalid or the user does not have a password.") {
-                res.send("Password is invalid")
+                data.message = "Password is invalid"
+                res.send(data)
             }
             else {
+                data.success = 1
                 console.log(errorMessage)
-                res.send("logged in")
+                data.message = 'logged in'
+                res.send(data)
             }
         })
     });

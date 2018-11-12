@@ -53,8 +53,6 @@ $(document).on("click", "#signup", function() {
         password: password
     }]
 
-    console.log(data)
-
     //Post ajax route for our signup
     $.ajax({
         method: "post",
@@ -128,8 +126,13 @@ $(document).on("click", "#login", function() {
         console.log(data)
 
         //Validating if there was a successful email login.  If yes then display users email
-        if (data) {
+        if (data.success === 0) {
+           
+            alert(data.message)
             
+        }
+        //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
+        else {
             $("#loginDiv").hide()
             $("#loginButton").hide()
             $("#signupButton").hide()
@@ -156,11 +159,6 @@ $(document).on("click", "#login", function() {
                         $("#signedIn").show().text("Signed in as " + data.email)
                     }
                 })
-            
-        }
-        //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
-        else {
-            alert(data)
         }
     })
 })
