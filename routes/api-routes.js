@@ -22,7 +22,7 @@ var sendData = {}
 // Initialize new forecast object to call weather info
 var forecast = new Forecast({
     service: 'darksky',
-    key: config.darkSkyApiKey,
+    key: process.env.darkSkyApiKey,
     units: 'fahrenheit',
     cache: true,      // Cache API requests 
     ttl: {            // How long to cache requests. Uses syntax from moment.js: http://momentjs.com/docs/#/durations/creating/ 
