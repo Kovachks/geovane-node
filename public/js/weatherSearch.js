@@ -74,7 +74,7 @@ $(document).on("click", "#search", function() {
         $("#weatherDisplay table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
          '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr></tbody></table>')
     })
-    
+        
     $(".tableDisplay").show()
 })
 
