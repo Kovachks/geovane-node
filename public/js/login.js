@@ -42,22 +42,24 @@ if (sessionStorage.getItem('accessToken=')) {
 
 //Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
 $(document).on("click", "#signup", function() {
-    console.log("test")
 
     //Grabbing input values and building out our data object
     let email = $("#email").val()
     let password = $("#password").val()
-    let data = {
+    console.log(email)
+    console.log(password)
+    let data = [{
         email: email,
-        password: password,
-        username: username
-    }
+        password: password
+    }]
+
+    console.log(data)
 
     //Post ajax route for our signup
     $.ajax({
-        method: "POST",
+        method: "post",
         url: "/signup",
-        data: data
+        data: data[0]
     })
     //promise from server that returns our login info is successful
     .then(function(data) {
@@ -65,8 +67,12 @@ $(document).on("click", "#signup", function() {
         console.log(data)
        if (data.email) {
             //Change this alert to modal in future on successful login
-           alert("Please check your email for a verification link")
-           $("#startModal").modal('toggle')
+           //alert("Please check your email for a verification link")
+           $('.modal-content').empty();
+           $('.modal-content').html("<div class='modal-header'><h3 class='modalTitle'>Signup Successful</h3><button type='button' class='close'" +
+           "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+           "<div class='modal-footer'><p>Account creation successful! Please check your email for a verification link to complete the authentication process.</p><button id='cancel'>Close</button></div>")
+           //$("#startModal").modal('toggle')
        } else {
             //Change this alert to modal in future on unsuccessful login
             alert("Signup failed")
