@@ -4,7 +4,7 @@ $(document).on("click", "#signupButton", function() {
             "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
             "<div class='modal-body'><h5>Email</h5>" + 
             "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
-            "</div><div class='modal-footer'><button id='signup'>Submit</button><button id='cancel'>Cancel</button></div>"
+            "</div><div class='modal-footer'><button type='button' class='btn btn-secondary btn-sm'  id='signup'>Submit</button><button type='button' class='btn btn-secondary btn-sm' id='cancel'>Cancel</button></div>"
     )
 })
 
@@ -13,7 +13,7 @@ $(document).on("click", "#loginButton", function() {
         "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
         "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
         "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-        "type='password' id='loginPassword'></div><div class='modal-footer'><button id='login'>Signin</button><button id='cancel'>Cancel</button></div>"
+        "type='password' id='loginPassword'></div><div class='modal-footer'><button type='button' class='btn btn-secondary btn-sm' id='login'>Signin</button><button type='button' class='btn btn-secondary btn-sm' id='cancel'>Cancel</button></div>"
     )
 })
 
@@ -35,7 +35,9 @@ if (sessionStorage.getItem('accessToken=')) {
             $("#loginButton").hide()
             $("#signupButton").hide()
             $("#logout").show()
-            $("#signedIn").show().text("Signed in as " + data.email)
+            $("#signedIn").show()
+            $("#signedIn").html("<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+            + data.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href='#'>Account</a><a class='dropdown-item' href='#'>Recent Searches</a><a class='dropdown-item' id='logout' href='#'>Logout</a></div></div>")
         }
     })
 }
@@ -156,7 +158,10 @@ $(document).on("click", "#login", function() {
                 })
                 .then(function(data) {
                     if (data.email) {
-                        $("#signedIn").show().text("Signed in as " + data.email)
+//                        $("#signedIn").show().text("Signed in as " + data.email)
+                          $("#signedIn").show();
+                          $("#signedIn").html("<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+                          + data.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href='#'>Account</a><a class='dropdown-item' href='#'>Recent Searches</a><a class='dropdown-item' id='logout' href='#'>Logout</a></div></div>")
                     }
                 })
         }

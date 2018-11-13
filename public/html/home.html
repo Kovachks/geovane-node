@@ -20,17 +20,20 @@
             </div>
         </div>
     </div>
-    <button id="signupButton" data-toggle="modal" data-target='#startModal'>Signup</button>
-    <button id="loginButton" data-toggle="modal" data-target='#startModal'>Login</button>
-    <button id="newTrip">New Trip</button>
+    <div id='loginMenu'>
+        <button type='button' class="btn btn-secondary btn-sm" id="signupButton" data-toggle="modal" data-target='#startModal'>Signup</button>
+        <button type='button' class="btn btn-secondary btn-sm" id="loginButton" data-toggle="modal" data-target='#startModal'>Login</button> 
+        <h4 id="signedIn"></h4>   
+    </div>
+    <button type='button' class="btn btn-secondary btn-sm" id="newTrip">New Trip</button>
     <div id="signupDiv">
         <h3>Signup</h3>
         <h4>Username</h4>
         <input type="text" id="username">
         <h4>Password</h4>
         <input type="password" id="password">
-        <button id="signup">Signup</button>
-        <button id="cancel">Cancel</button>
+        <button type='button' class="btn btn-secondary btn-sm" id="signup">Signup</button>
+        <button type='button' class="btn btn-secondary btn-sm" id="cancel">Cancel</button>
     </div>
     <div id="loginDiv">
         <h3>Login</h3>
@@ -38,12 +41,12 @@
         <input type="text" id="loginUsername">
         <h4>Password</h4>
         <input type="password" id="loginPassword">
-        <button id="login">Login</button>
-        <button>Cancel</button>
+        <button type='button' class="btn btn-secondary btn-sm" id="login">Login</button>
+        <button type='button' class="btn btn-secondary btn-sm" >Cancel</button>
     </div>
-    <button id="logout">Logout</button>
+    <!-- <button id="logout">Logout</button> -->
 
-    <h4 id="signedIn">Signed in</h4>
+
     <div>
         <div id="searchDiv">
             <h4>Start</h4>
@@ -54,7 +57,7 @@
             <input type="checkbox" id="traffic">
             <label for="traffic">Traffic Overlay</label>
             <br>
-            <button id="search">Search</button>
+            <button type='button' class="btn btn-secondary btn-sm" id="search">Search</button>
         </div>    
         <div class="container" id="resultsContainer">
             <div class="row">

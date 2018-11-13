@@ -5,6 +5,13 @@
 .container {
     max-width: 100%;
 }
+#loginMenu {
+    margin-left: 85%;
+    width: 20%;
+}
+.btn {
+
+}
 #map {
     display: block;
     height: 500px;
@@ -22,9 +29,6 @@
     display: none;
 }
 #newTrip {
-    display: none;
-}
-#logout {
     display: none;
 }
 #loginDiv {
