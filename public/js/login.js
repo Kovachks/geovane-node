@@ -37,7 +37,7 @@ $(document).on("click", "#loginButton", function() {
         "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
         "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
         "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-        "type='password' id='loginPassword'></div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary' id='login'>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
+        "type='password' id='loginPassword'></div><div class='modal-footer'><div class='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login'>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
     )
 })
 
@@ -129,11 +129,12 @@ $(document).on("click", "#login", function() {
         //Validating if there was a successful email login.  If yes then display users email
         if (data.success === 0) {
            
-            alert(data.message)
+            $(".incorrect").css({'display': 'inline'})
             
         }
         //Invalid responding with the data provided from the server which is an alert.  Switch to modal in future
         else {
+            $(".incorrect").css({'display': 'hidden'})
             $("#loginDiv").hide()
             $("#loginButton").hide()
             $("#signupButton").hide()

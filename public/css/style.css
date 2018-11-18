@@ -23,6 +23,11 @@
     margin: 0 auto;
     height: 500px;
 }
+.incorrect {
+    padding: 0 40% 0 0;
+    display: none;
+    color: red;
+}
 #stepToggle {
     margin: -5px;
 }
