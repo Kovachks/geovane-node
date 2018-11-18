@@ -1,23 +1,3 @@
-$(document).on("click", "#signupButton", function() {
-    $(".modal-content").html(
-        "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
-            "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-            "<div class='modal-body'><h5>Email</h5>" + 
-            "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
-            "</div><div class='modal-footer'><button type='button' class='btn btn-secondary btn-sm'  id='signup'>Submit</button><button type='button' class='btn btn-secondary btn-sm' id='cancel'>Cancel</button></div>"
-    )
-})
-
-$(document).on("click", "#loginButton", function() {
-    $(".modal-content").html(
-        "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
-        "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-        "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-        "type='password' id='loginPassword'></div><div class='modal-footer'><button type='button' class='btn btn-secondary btn-sm' id='login'>Signin</button><button type='button' class='btn btn-secondary btn-sm' id='cancel'>Cancel</button></div>"
-    )
-})
-
-
 if (sessionStorage.getItem('accessToken=')) {
     var data = {
         // uid: sessionStorage.getItem("uid="),
@@ -36,11 +16,30 @@ if (sessionStorage.getItem('accessToken=')) {
             $("#signupButton").hide()
             $("#logout").show()
             $("#signedIn").show()
-            $("#signedIn").html("<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+            $("#signedIn").html("<div class='dropdown'><button class='btn btn-sm btn-outline-secondary' dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
             + data.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href='#'>Account</a><a class='dropdown-item' href='#'>Recent Searches</a><a class='dropdown-item' id='logout' href='#'>Logout</a></div></div>")
         }
     })
 }
+
+$(document).on("click", "#signupButton", function() {
+    $(".modal-content").html(
+        "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
+            "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+            "<div class='modal-body'><h5>Email</h5>" + 
+            "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
+            "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
+    )
+})
+
+$(document).on("click", "#loginButton", function() {
+    $(".modal-content").html(
+        "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
+        "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+        "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
+        "type='password' id='loginPassword'></div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary' id='login'>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
+    )
+})
 
 //Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
 $(document).on("click", "#signup", function() {
@@ -160,7 +159,7 @@ $(document).on("click", "#login", function() {
                     if (data.email) {
 //                        $("#signedIn").show().text("Signed in as " + data.email)
                           $("#signedIn").show();
-                          $("#signedIn").html("<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
+                          $("#signedIn").html("<div class='dropdown'><button class='btn btn-sm btn-outline-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
                           + data.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href='#'>Account</a><a class='dropdown-item' href='#'>Recent Searches</a><a class='dropdown-item' id='logout' href='#'>Logout</a></div></div>")
                     }
                 })
