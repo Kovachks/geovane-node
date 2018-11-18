@@ -95,3 +95,14 @@ overflow: hidden;
     border: 2px solid black;
     font-weight: bold;
 }
+#searchDiv {
+    width: 250px;
+    height: 300px;
+    margin: 40px auto 0 auto;
+    background-color: #f8f9fa;
+}
+.searchInner {
+    width: 80%;
+    margin: 0 auto 0 auto;
+    padding-top: 50px;
+}
