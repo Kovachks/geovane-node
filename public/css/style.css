@@ -99,10 +99,29 @@ overflow: hidden;
     width: 250px;
     height: 300px;
     margin: 40px auto 0 auto;
-    background-color: #f8f9fa;
+    background-color: #68BDEA;
 }
 .searchInner {
     width: 80%;
     margin: 0 auto 0 auto;
     padding-top: 50px;
+}
+.teal-color {
+    background-color: #68BDEA;
+}
+h4 {
+    color: grey;
+}
+.navbar-brand {
+    color: grey;
+}
+label {
+    color: grey;
+}
+body {
+    background-color: #D3D3D3;
+}
+.btn {
+    background-color: #D3D3D3;
+    color: white;
 }
