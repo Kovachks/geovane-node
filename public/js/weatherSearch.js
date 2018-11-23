@@ -17,6 +17,8 @@ $(document).ready(function() {
 //Click handler for our main Search
 $(document).on("click", "#search", function() {
 
+    $("#weatherDisplay table").empty()
+
     //Grabbing user entered data
     let startCity = $("#startCity").val()
     let endCity = $("#endCity").val()
@@ -60,7 +62,7 @@ $(document).on("click", "#search", function() {
         initMap(data)
 
 
-        $("#weatherDisplay table").append('<tr><td>Step</td><td>Weather</td><td>Location</td><td>Temperature</td><td>Precipitation</td><td>Arrival Time</td></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
+        $("#weatherDisplay table").append('<tr><td>Step</td><td>Weather</td><td>Location</td><td>Temp.</td><td>Precip.</td><td>Arrival Time</td></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
          '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr></tbody></table>')
 
         //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
@@ -92,7 +94,6 @@ $(document).on("click", "#newTrip", function() {
     $("#loginDiv").hide()
     $("#signupButton").show()
     $("#loginButton").show()
-    $("#weatherDisplay table").empty()
 })
 
 //Function for generating google map
