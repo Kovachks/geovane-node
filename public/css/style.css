@@ -5,8 +5,12 @@
     height: 100%;
     padding: 0;
 }
+#mainBody {
+    height: 650px;
+}
 .row {
     margin: 0;
+    height: 100%;
 }
 .container {
     max-width: 100%;
@@ -21,7 +25,7 @@
 }
 #map {
     display: block;
-    height: 500px;
+    height: 100%;
     margin: 0 auto 10px auto;
 }
 #startCity {
