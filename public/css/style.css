@@ -1,9 +1,12 @@
 #resultsContainer {
     display: inline-block;
-    margin-left: 20%;
+    margin-left: 500px;
     width: 80%;
     height: 100%;
     padding: 0;
+}
+.row {
+    margin: 0;
 }
 .container {
     max-width: 100%;
@@ -69,7 +72,7 @@ button {
 }
 .resultToggleDiv{
     width:100%;
-    height: 98px;
+    height: 40px;
 }
 .resultToggle{
     display: inline-block;
@@ -92,10 +95,13 @@ width: 100%;
 overflow: hidden;
 }
 .toggleTitle {
-    height: 100%;
+    height: 40px;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 0;
     font-size: 25px;
+}
+td {
+    font-size: 11px;
 }
 .selected {
     border: 2px solid black;
@@ -103,15 +109,15 @@ overflow: hidden;
 }
 #searchDiv {
     position: fixed;
-    width: 400px;
+    width: 500px;
     height: 100%;
     margin-right: 0;
     background-color: #68BDEA;
 }
 .searchInner {
-    width: 80%;
+    width: 90%;
     margin: 0 auto 0 auto;
-    padding: 30px 0 10px 0;
+    padding: 15px 0 10px 0;
     border-bottom: 1px solid grey;
 }
 #startCity {
@@ -121,9 +127,9 @@ overflow: hidden;
     width: 100%;
 }
 .resultsInner {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
-    padding: 20px 0 0 0;
+    padding: 0;
     border: 1px solid black;
     height: 100%;
 }
