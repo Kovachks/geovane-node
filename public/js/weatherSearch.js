@@ -43,10 +43,6 @@ $(document).on("click", "#search", function() {
         }
     } 
 
-    //Reseting values on our HTML page 
-    document.getElementById("startCity").value = ""
-    document.getElementById("endCity").value = ""
-
     console.log(searchData)
 
     //Ajax call in order to send our searched data to the server

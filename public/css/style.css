@@ -1,12 +1,16 @@
 #resultsContainer {
     display: inline-block;
     margin-left: 500px;
-    width: 80%;
+    width: calc(100% - 500px);
     height: 100%;
     padding: 0;
 }
+.navbar {
+    padding: 0 10px;
+}
+
 #mainBody {
-    height: 650px;
+    height: calc(100% - 45px);
 }
 .row {
     margin: 0;
@@ -26,7 +30,7 @@
 #map {
     display: block;
     height: 100%;
-    margin: 0 auto 10px auto;
+    margin: 0 auto;
 }
 #startCity {
     margin-bottom: 10px;
@@ -114,12 +118,13 @@ td {
 #searchDiv {
     position: fixed;
     width: 500px;
-    height: 100%;
+    height: calc(100% - 39.6px);
     margin-right: 0;
     background-color: #68BDEA;
 }
 .searchInner {
     width: 90%;
+    height: 160px;
     margin: 0 auto 0 auto;
     padding: 15px 0 10px 0;
     border-bottom: 1px solid grey;
@@ -135,7 +140,7 @@ td {
     margin: 0 auto;
     padding: 0;
     border: 1px solid black;
-    height: 100%;
+    height: calc(100% - 160px);
 }
 .teal-color {
     background-color: #68BDEA;
@@ -149,8 +154,12 @@ h4 {
 label {
     color: grey;
 }
+html {
+    height: 100%;
+}
 body {
     background-color: #D3D3D3;
+    height: 100%;
 }
 .btn {
     background-color: #D3D3D3;
