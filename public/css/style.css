@@ -74,7 +74,6 @@ button {
     overflow: hidden;
 }
 .tableDisplay {
-    border: 1px solid black;
     padding: 0;
     height: 400px;
 }
@@ -97,7 +96,7 @@ button {
     box-sizing: content-box;
 }
 .parentDisplay {
-height: 400px;
+height: 460px;
 padding: 5px;
 width: 100%;
 overflow: hidden;
@@ -139,7 +138,6 @@ td {
     width: 90%;
     margin: 0 auto;
     padding: 0;
-    border: 1px solid black;
     height: calc(100% - 160px);
 }
 .teal-color {
