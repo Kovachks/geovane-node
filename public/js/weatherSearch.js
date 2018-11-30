@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    let input = document.getElementById('startCity')
+
     $("#stepToggle").on("click", function() {
         $("#weatherDisplayParent").hide()
         $("#stepDisplayParent").show()
@@ -12,7 +15,7 @@ $(document).ready(function() {
 
     $("#stepDisplayParent").hide()
     $(".tableDisplay").hide()
-})
+
 
 //Click handler for our main Search
 $(document).on("click", "#search", function() {
@@ -94,6 +97,7 @@ $(document).on("click", "#newTrip", function() {
 
 //Function for generating google map
 function initMap(data) {
+
     var markerObject = []
 
     //Looping through all the invidual steps in order to build out our marker object to post markers on the map
@@ -255,3 +259,4 @@ function displayRoute(origin, destination, service, display, markerObject) {
         });
     }
 }
+})
