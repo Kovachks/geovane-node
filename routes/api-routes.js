@@ -14,6 +14,7 @@ var config = require("../config/config.js")
 // var config = require("../config/config.js")
 
 
+
 //Global Variables
 var database = firebase.database()
 var apiKey = process.env.googleDirectionsApiKey
