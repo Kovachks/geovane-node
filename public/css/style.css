@@ -5,6 +5,13 @@
     height: 100%;
     padding: 0;
 }
+#searchDiv {
+    position: fixed;
+    width: 500px;
+    height: calc(100% - 39.6px);
+    margin-right: 0;
+    background-color: #68BDEA;
+}
 .navbar {
     padding: 0 10px;
 }
@@ -114,13 +121,6 @@ td {
     border: 2px solid black;
     font-weight: bold;
 }
-#searchDiv {
-    position: fixed;
-    width: 500px;
-    height: calc(100% - 39.6px);
-    margin-right: 0;
-    background-color: #68BDEA;
-}
 .searchInner {
     width: 90%;
     height: 160px;
@@ -140,6 +140,7 @@ td {
     margin: 0 auto;
     padding: 0;
     height: calc(100% - 160px);
+    overflow: visible;
 }
 .teal-color {
     background-color: #68BDEA;
