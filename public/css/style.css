@@ -45,7 +45,7 @@
 #tripDistance {
     display: block; 
     margin: 0 auto;
-    height: 500px;
+    height: 100%;
 }
 .incorrect {
     padding: 0 40% 0 0;
@@ -78,7 +78,7 @@ button {
 #weatherTable {
     width:100%;
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
 }
 .tableDisplay {
     padding: 0;
@@ -103,7 +103,7 @@ button {
     box-sizing: content-box;
 }
 .parentDisplay {
-height: 460px;
+height: calc(100% - 40px);
 padding: 5px;
 width: 100%;
 overflow: hidden;
@@ -140,7 +140,6 @@ td {
     margin: 0 auto;
     padding: 0;
     height: calc(100% - 160px);
-    overflow: visible;
 }
 .teal-color {
     background-color: #68BDEA;
