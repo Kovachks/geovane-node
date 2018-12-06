@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $(".resultsInner").hide()
+
     let input = document.getElementById('startCity')
 
     $("#stepToggle").on("click", function() {
@@ -20,6 +22,9 @@ $(document).ready(function() {
 //Click handler for our main Search
 $(document).on("click", "#search", function() {
 
+
+    $(".resultsInner").show()
+    //Empty previous searches if any
     $("#weatherDisplay table").empty()
 
     //Grabbing user entered data

@@ -186,10 +186,17 @@ and (max-device-width : 480px) {
         top: 200px;
         left: 0;
         margin-left: 0px;
+        height: calc(100% - 200px);
+        width: 100%;
     }
     .resultsInner {
         position: absolute;
-        top: 1000px;
+        top: 100%;
+        width: 100%;
+    }
+    .searchInner {
+        padding: 5px 0 0 0;
+        height: 145px;
     }
 
 /* Smartphones (landscape) ----------- */
