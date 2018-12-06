@@ -1,23 +1,19 @@
-#resultsContainer {
-    display: inline-block;
-    margin-left: 500px;
-    width: calc(100% - 500px);
-    height: 100%;
-    padding: 0;
-}
+
 #searchDiv {
-    position: fixed;
+    position: absolute;
+    left: 0;
     width: 500px;
-    height: calc(100% - 39.6px);
+    height: calc(100% - 40px);
     margin-right: 0;
     background-color: #68BDEA;
 }
 .navbar {
     padding: 0 10px;
+    height: 40px;
 }
 
 #mainBody {
-    height: calc(100% - 45px);
+    height: calc(100% - 40px);
 }
 .row {
     margin: 0;
@@ -34,10 +30,12 @@
     margin-left: 89%;
     width: 10%;
 }
-#map {
+.resultsContainer {
     display: block;
+    margin-left: 500px;
+    width: calc(100% - 500px);
     height: 100%;
-    margin: 0 auto;
+    padding: 0;
 }
 #startCity {
     margin-bottom: 10px;
@@ -82,7 +80,6 @@ button {
 }
 .tableDisplay {
     padding: 0;
-    height: 400px;
 }
 .resultToggleDiv{
     width:100%;
@@ -130,7 +127,7 @@ td {
 }
 .searchInner {
     width: 90%;
-    height: 160px;
+    height: 159px;
     margin: 0 auto 0 auto;
     padding: 15px 0 10px 0;
     border-bottom: 1px solid grey;
@@ -184,7 +181,16 @@ and (max-device-width : 480px) {
     .navbar {
         width: 100%;
     }
-}
+    .resultsContainer {
+        position: absolute;
+        top: 200px;
+        left: 0;
+        margin-left: 0px;
+    }
+    .resultsInner {
+        position: absolute;
+        top: 1000px;
+    }
 
 /* Smartphones (landscape) ----------- */
 @media only screen 
@@ -199,6 +205,7 @@ and (min-width : 321px) {
     .navbar {
         width: 100%;
     }
+
 }
 
 /* Smartphones (portrait) ----------- */
