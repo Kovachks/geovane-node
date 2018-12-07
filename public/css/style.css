@@ -1,4 +1,3 @@
-
 #searchDiv {
     position: absolute;
     left: 0;
@@ -107,10 +106,10 @@ button {
     box-sizing: content-box;
 }
 .parentDisplay {
-height: calc(100% - 40px);
-padding: 5px;
-width: 100%;
-overflow: hidden;
+    height: calc(100% - 40px);
+    padding: 5px;
+    width: 100%;
+    overflow: hidden;
 }
 .toggleTitle {
     height: 40px;
@@ -171,7 +170,7 @@ body {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 320px) 
-and (max-device-width : 480px) {
+and (max-device-width : 550px) {
     body {
         width: 100%;
     }
@@ -201,77 +200,18 @@ and (max-device-width : 480px) {
 
 /* Smartphones (landscape) ----------- */
 @media only screen 
-and (min-width : 321px) {
+/* and (min-device-width : 320px)
+and (max-device-width: 550px)  */
+and (orientation: landscape) {
     body {
         width: 100%;
     }
     #searchDiv {
-        width: 100%;
-        position: absolute;
+        width: 100px; 
+        background-color: red;
     }
     .navbar {
         width: 100%;
     }
 
-}
-
-/* Smartphones (portrait) ----------- */
-@media only screen 
-and (max-width : 320px) {
-    body {
-        width: 100%;
-    }
-    #searchDiv {
-        width: 100%;
-    }
-    .navbar {
-        width: 100%;
-    }
-}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) {
-    body {
-        width: 100%;
-    }
-    #searchDiv {
-        width: 100%;
-    }
-    .navbar {
-        width: 100%;
-    }
-}
-
-/* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-    body {
-        width: 100%;
-    }
-    #searchDiv {
-        width: 100%;
-    }
-    .navbar {
-        width: 100%;
-    }
-}
-
-/* iPads (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-    body {
-        width: 100%;
-    }
-    #searchDiv {
-        width: 100%;
-    }
-    .navbar {
-        width: 100%;
-    }
-}
+}}
