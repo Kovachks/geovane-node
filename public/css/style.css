@@ -167,6 +167,27 @@ body {
     background-color: #D3D3D3;
     color: white;
 }
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-device-width : 551px)
+and (max-device-width: 767px) 
+and (orientation: landscape) {
+    body {
+        width: 100%;
+    }
+    #searchDiv {
+        width: 40%; 
+    }
+    .resultsContainer {
+        margin-left: 40%;
+        width: 60%;
+    }
+    .navbar {
+        width: 100%;
+    }
+
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 320px) 
@@ -197,21 +218,4 @@ and (max-device-width : 550px) {
         padding: 5px 0 0 0;
         height: 145px;
     }
-
-/* Smartphones (landscape) ----------- */
-@media only screen 
-/* and (min-device-width : 320px)
-and (max-device-width: 550px)  */
-and (orientation: landscape) {
-    body {
-        width: 100%;
-    }
-    #searchDiv {
-        width: 100px; 
-        background-color: red;
-    }
-    .navbar {
-        width: 100%;
-    }
-
-}}
+}
