@@ -170,6 +170,49 @@ body {
 }
 /* Smartphones (landscape) ----------- */
 @media only screen 
+and (min-device-width : 768px)
+and (max-device-width: 1028px) {
+    .searchInner {
+        height: 100px;
+        padding-top: 3px;
+        padding-bottom: 0;
+    }
+    .ap-icon-pin {
+        height: calc(100%-3px);
+    }
+    .resultsInner {
+        height: calc(100% - 100px);
+        width: 100%;
+        padding-top: 2px;
+    }
+    .parentDisplay {
+        height: calc(100% - 35px)
+    }
+    #startCity {
+        height: 50%;
+        margin-bottom: 3px;
+    }
+    #endCity {
+        height: 50%;
+    }
+    body {
+        width: 100%;
+    }
+    #searchDiv {
+        width: 40%; 
+    }
+    .resultsContainer {
+        margin-left: 40%;
+        width: 60%;
+    }
+    .navbar {
+        width: 100%;
+    }
+
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
 and (min-device-width : 551px)
 and (max-device-width: 767px) 
 and (orientation: landscape) {
