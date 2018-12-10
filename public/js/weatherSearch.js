@@ -1,8 +1,8 @@
+$("#stepDisplayParent").hide()
+$(".tableDisplay").hide()
+$(".resultsInner").hide()
+
 $(document).ready(function() {
-
-    $(".resultsInner").hide()
-
-    let input = document.getElementById('startCity')
 
     $("#stepToggle").on("click", function() {
         $("#weatherDisplayParent").hide()
@@ -14,10 +14,6 @@ $(document).ready(function() {
         $("#stepDisplayParent").hide()
         $("#weatherDisplayParent").show()
     })
-
-    $("#stepDisplayParent").hide()
-    $(".tableDisplay").hide()
-
 
 //Click handler for our main Search
 $(document).on("click", "#search", function() {
