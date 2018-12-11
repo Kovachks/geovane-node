@@ -227,7 +227,6 @@ and (max-device-width: 1028px) {
     .navbar {
         width: 100%;
     }
-
 }
 
 /* Smartphones (landscape) ----------- */
@@ -257,6 +256,9 @@ and (min-device-width : 320px)
 and (max-device-width : 550px) {
     body {
         width: 100%;
+    }
+    .resultToggle {
+        width: 49.10%;
     }
     #searchDiv {
         width: 100%;
