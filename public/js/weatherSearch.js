@@ -12,7 +12,6 @@ $(document).ready(function() {
     })
 
     $("#weatherToggle").on("click", function() {
-        console.log("this is a button test")
         $("#stepDisplayParent").hide()
         $("#weatherDisplayParent").show()
         $("#weatherToggle").removeClass('unselected').addClass('selected')
@@ -60,13 +59,20 @@ $(document).ready(function() {
             data: searchData
         }).then(function(data) {
             
-            console.log("THIS IS THE DATA " + JSON.stringify(data))
+            console.log("THIS IS THE DATA " + JSON.stringify(data.directions[0].duration.text))
             
             //Calling initmap function for generation of google map
             initMap(data)
 
+            // Creating table elements for directions display
+            $("#stepDisplay table").append('<tr><th>Direction</th><th>Time/Distance</th></tr>')
 
-            $("#weatherDisplay table").append('<tr><td>Step</td><td>Weather</td><td>Location</td><td>Temp.</td><td>Precip.</td><td>Arrival Time</td></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
+            for (let k = 0; k < data.directions.length; k ++) {
+                $("#stepDisplay table").append('<tr><td>' + data.directions[k].html_instructions + '</td><td>' + data.directions[k].duration.text + "/" + data.directions[k].distance.text + '</td></tr>')
+            }
+
+            // creating table elements for weather display
+            $("#weatherDisplay table").append('<tr><th>Step</th><th>Weather</th><th>Location</th><th>Temp.</th><th>Precip.</th><th>Arrival Time</th></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
             '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr></tbody></table>')
 
             //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
@@ -80,10 +86,6 @@ $(document).ready(function() {
             //Finishing off the table with the end points data
             $("#weatherDisplay table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
             '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr></tbody></table>')
-        
-            
-        
-        
         })
             
         $(".tableDisplay").show()
@@ -114,7 +116,7 @@ $(document).ready(function() {
                 temp: data.allSteps[i].currentTemp
             }
         }
-        console.log(markerObject)
+        // console.log(markerObject)
 
         //creating map opject that centers on the start lat/lng
         var map = new google.maps.Map(document.getElementById('map'), {
