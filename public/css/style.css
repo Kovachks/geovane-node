@@ -264,7 +264,10 @@ and (orientation: landscape) {
     .navbar {
         width: 100%;
     }
-
+    .searchInner {
+        padding: 5px 0 0 0;
+        height: 145px;
+    }
 }
 
 /* Smartphones (portrait and landscape) ----------- */
