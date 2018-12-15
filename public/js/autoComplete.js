@@ -1,6 +1,3 @@
-
-
-
 const startCityAutocomplete = places({
     appId: 'pl3PTJ4TV68K',
     apiKey: 'dabd71a7698090c4b61f7afde506ff62',

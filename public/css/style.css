@@ -103,9 +103,17 @@ table {
 .title {
     margin: 0 0 0 15px;
     padding: 2px 0 0 0;
+    font-size: 28px;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-weight: 900;
+    color: white;
+}
+.titleNav {
+    margin: 0 0 0px .5px;
+    padding: 2px 0 0 0;
     font-size: 20px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: grey;
+    letter-spacing: .5px;
+    color: white
 }
 .resultToggle{
     display: inline-block;
@@ -142,14 +150,13 @@ td {
     font-size: 11px;
 }
 .selected {
-	/* background: #68BDEA;
-    color: white; */
-    background: #68BDEA;
+    background: white;
     color: black;
+    /* border-bottom: 2px solid black; */
 }
 .unselected {
     color: white;
-    border-bottom: 2px solid black;
+
 }
 .searchInner {
     width: 90%;
@@ -197,6 +204,10 @@ body {
 @media only screen 
 and (min-device-width : 768px)
 and (max-device-width: 1028px) {
+    .titleNav {
+        position: absolute;
+        left: 115px;
+    }
     .searchInner {
         height: 100px;
         padding-top: 3px;
