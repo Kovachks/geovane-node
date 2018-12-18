@@ -25,6 +25,7 @@ $(document).ready(function() {
         $(".resultsInner").show()
         //Empty previous searches if any
         $("#weatherDisplay table").empty()
+        $("#stepDisplay table").empty()
 
         //Grabbing user entered data
         let startCity = $("#startCity").val()
