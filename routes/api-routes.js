@@ -79,7 +79,7 @@ module.exports = function(app) {
     })
 
     app.post("/signup", function(req, res) {
-        console.log(req.body)
+        console.log('this is the data' + JSON.stringify(req.body))
         firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             //console.log(user)
             user.sendEmailVerification().then(function() {

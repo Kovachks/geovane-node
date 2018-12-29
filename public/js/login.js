@@ -1,60 +1,56 @@
-$(document).on("click", "#signupButton", function() {
-    $(".modal-content").html(
-        "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
-            "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-            "<div class='modal-body'><h5>Email</h5>" + 
-            "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
-            "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
-    )
+document.getElementById('signupButton').addEventListener('click', function() {
+    document.getElementById('modal-content').innerHTML = "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
+    "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+    "<div class='modal-body'><h5>Email</h5>" + 
+    "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
+    "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup' onclick='signup()'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
 })
 
-$(document).on("click", "#loginButton", function() {
-    $(".modal-content").html(
-        "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
-        "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-        "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-        "type='password' id='loginPassword'></div><div class='modal-footer'><div class='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login'>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
-    )
+document.getElementById('loginButton').addEventListener('click', function() {
+    document.getElementById('modal-content').innerHTML = "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
+    "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+    "<div class='modal-body'><h5>Email</h5>" + 
+    "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
+    "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup' onclick='login()'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
 })
 
-//Ajax call in order for a user to signup.  Passing user email and password.  User will get an email for email authentication
-$(document).on("click", "#signup", function() {
-
-    //Grabbing input values and building out our data object
-    let email = $("#email").val()
-    let password = $("#password").val()
-    console.log(email)
-    console.log(password)
+const signup = () => {
+    let email = document.getElementById('email').value
+    let password = document.getElementById('password').value
     let data = [{
         email: email,
         password: password
     }]
 
-    //Post ajax route for our signup
-    $.ajax({
-        method: "post",
-        url: "/signup",
-        data: data[0]
-    })
-    //promise from server that returns our login info is successful
-    .then(function(data) {
+    var request = new XMLHttpRequest();
 
-        console.log(data)
-       if (data.email) {
-            //Change this alert to modal in future on successful login
-           //alert("Please check your email for a verification link")
-           $('.modal-content').empty();
-           $('.modal-content').html("<div class='modal-header'><h3 class='modalTitle'>Signup Successful</h3><button type='button' class='close'" +
-           "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-           "<div class='modal-footer'><p>Account creation successful! Please check your email for a verification link to complete the authentication process.</p><button id='cancel'>Close</button></div>")
-           //$("#startModal").modal('toggle')
-       } else {
-            //Change this alert to modal in future on unsuccessful login
-            alert("Signup failed")
-       }
+    request.open('POST', '/signup')
+    request.setRequestHeader('Content-Type', 'application/JSON');
+    request.onload = function(data) {
+        if (request.status = 200) {
+            let data = JSON.parse(request.responseText)
+            if (data.email) {
+                document.getElementById('modal-content').innerHTML = '';
+                document.getElementById('modal-content').innerHTML = "<div class='modal-header'><h3 class='modalTitle'>Signup Successful</h3><button type='button' class='close'" +
+                           "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
+                           "<div class='modal-footer'><p>Account creation successful! Please check your email for a verification link to complete the authentication process.</p><button id='cancel'>Close</button></div>"
+            }
+            else {
+                alert("Signup failed")
+            }
+        }
+    }
 
-    })
-})
+    request.send(JSON.stringify({
+        email: email,
+        password: password
+    }))
+
+}
+
+const login = () => {
+
+}
 
 //Logout click handler
 $(document).on("click", "#logout", function() {
