@@ -10,7 +10,7 @@ document.getElementById('loginButton').addEventListener('click', function() {
     document.getElementById('modal-content').innerHTML = "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
     "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
     "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-    "type='password' id='loginPassword'></div><div class='modal-footer'><div class='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
+    "type='password' id='loginPassword'></div><div class='modal-footer'><div id='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel'>Cancel</button></div>"
 })
 
 const signup = () => {
@@ -21,7 +21,7 @@ const signup = () => {
         password: password
     }]
 
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
 
     request.open('POST', '/signup')
     request.setRequestHeader('Content-Type', 'application/JSON');
@@ -58,13 +58,11 @@ const login = () => {
     request.onload = function() {
         if (request.status = 200) {
             let data = JSON.parse(request.response)
-            console.log(data.login)
             if (data.login === false) {
-                console.log('false')
-                document.getElementsByClassName('incorrect').style.display = 'inline'
+                document.getElementById('incorrect').style.display = 'inline'
             }
             else if (data.login === true){
-                console.log('login')
+                
                 document.getElementById('loginDiv').style.visibility = 'hidden'
                 document.getElementById('loginButton').style.visibility = 'hidden'
                 document.getElementById('signupButton').style.visibility = 'hidden'

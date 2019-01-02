@@ -45,7 +45,7 @@
     margin: 0 auto;
     height: 100%;
 }
-.incorrect {
+#incorrect {
     padding: 0 40% 0 0;
     display: none;
     color: red;
