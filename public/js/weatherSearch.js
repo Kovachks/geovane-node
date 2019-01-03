@@ -4,6 +4,7 @@ $(".resultsInner").hide()
 
 $(document).ready(function() {
 
+    //Toggle to direction display
     $("#stepToggle").on("click", function() {
         $("#weatherDisplayParent").hide()
         $("#stepDisplayParent").show()
@@ -11,6 +12,7 @@ $(document).ready(function() {
         $("#weatherToggle").removeClass('selected').addClass('unselected')
     })
 
+    //Toggle to weather display
     $("#weatherToggle").on("click", function() {
         $("#stepDisplayParent").hide()
         $("#weatherDisplayParent").show()
@@ -20,7 +22,6 @@ $(document).ready(function() {
 
     //Click handler for our main Search
     $(document).on("click", "#search", function() {
-
 
         $(".resultsInner").show()
         //Empty previous searches if any

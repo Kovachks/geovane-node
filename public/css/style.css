@@ -76,11 +76,11 @@ button {
 #stepDisplayParent{
     background-color: white;
 }
-#stepDisplay > table > tr {
-    border-bottom: 1px solid black;
+#stepDisplay > table > tr > td {
+    border-top: 1px solid black;
 }
-#weatherDisplay > table > tr {
-    border-bottom: 1px solid black;
+#weatherDisplay > table > tr > td {
+    border-top: 1px solid black;
 }
 table {
     width:100%;
