@@ -79,7 +79,7 @@ module.exports = function(app) {
     })
 
     app.post("/signup", function(req, res) {
-        console.log(req.body)
+        console.log('this is the data' + JSON.stringify(req.body))
         firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             //console.log(user)
             user.sendEmailVerification().then(function() {
@@ -109,11 +109,16 @@ module.exports = function(app) {
         firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             var userCheck = firebase.auth().currentUser
             if (userCheck.emailVerified === true) {
+                let data = {}
                   admin.auth().createCustomToken(user.uid).then(function(customToken) {
-                      res.send(customToken)
+                    data.login = true
+                    data.customToken = customToken
+                      res.send(data)
                   })
             } else {
                 firebase.auth().signOut().then(function() {
+                    data.message = "Please verify your email in order to login."
+                    data.login = false
                     res.send("Please verify your email in order to login.")
                 })
             }
@@ -127,20 +132,24 @@ module.exports = function(app) {
             console.log(errorMessage)
             if (errorMessage === "There is no user record corresponding to this identifier. The user may have been deleted."){
                 data.message = "No user with that login email"
+                data.login = false
                 res.send(data)
                 }
             else if (errorMessage === "The email address is badly formatted.") {
                     data.message = "Please enter a valid email" 
+                    data.login = false
                     res.send(data)
             } 
             else if (errorMessage === "The password is invalid or the user does not have a password.") {
                 data.message = "Password is invalid"
+                data.login = false
                 res.send(data)
             }
             else {
                 data.success = 1
                 console.log(errorMessage)
                 data.message = 'logged in'
+                data.login = true
                 res.send(data)
             }
         })

@@ -45,7 +45,7 @@
     margin: 0 auto;
     height: 100%;
 }
-.incorrect {
+#incorrect {
     padding: 0 40% 0 0;
     display: none;
     color: red;
@@ -79,8 +79,14 @@ button {
 #stepDisplay > table > tr > td {
     border-top: 1px solid black;
 }
+<<<<<<< HEAD
 #weatherDisplay > table > tr > td {
     border-top: 1px solid black;
+=======
+#weatherDisplay > table > tr {
+    border-bottom: 1px solid black;
+    height: 50px;
+>>>>>>> e5b2d44627dd1d6a31fb7d1048cf76fabc6cde9a
 }
 table {
     width:100%;
@@ -264,7 +270,14 @@ and (orientation: landscape) {
     .navbar {
         width: 100%;
     }
-
+    .searchInner {
+        padding: 5px 0 0 0;
+        height: 145px;
+    }
+    .titleNav {
+        position: absolute;
+        left: 115px;
+    }
 }
 
 /* Smartphones (portrait and landscape) ----------- */
@@ -310,5 +323,9 @@ and (max-device-width : 550px) {
     }
     .parentDisplay {
         padding: 0;
+    }
+    .titleNav {
+        position: absolute;
+        left: 115px;
     }
 }
