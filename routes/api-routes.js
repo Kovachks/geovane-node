@@ -87,15 +87,17 @@ module.exports = function(app) {
               }).catch(function(error) {
                 // An error happened.
               });
+              console.log(user)
             res.send(user)
         }).catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
+            console.log(error)
         })
     })
 
     app.post("/logout", function(req, res) {
-        console.log("test")
+        console.log("test for logout")
         firebase.auth().signOut().then(function() {
             res.send("logged out")
           }, function(error) {

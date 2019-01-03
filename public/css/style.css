@@ -79,14 +79,9 @@ button {
 #stepDisplay > table > tr > td {
     border-top: 1px solid black;
 }
-<<<<<<< HEAD
-#weatherDisplay > table > tr > td {
-    border-top: 1px solid black;
-=======
 #weatherDisplay > table > tr {
     border-bottom: 1px solid black;
     height: 50px;
->>>>>>> e5b2d44627dd1d6a31fb7d1048cf76fabc6cde9a
 }
 table {
     width:100%;
