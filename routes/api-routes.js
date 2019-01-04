@@ -174,7 +174,7 @@ module.exports = function(app) {
 
 //Querying google Directions API to grab route data
 function googleDirections(data, res) {
-    console.log("test")
+    console.log('google directions data: ' + JSON.stringify(data))
     googleMapsClient.createClient({
         key: apiKey
     }).directions({

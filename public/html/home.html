@@ -11,21 +11,13 @@
         <title>WeatherNav</title>
     </head>
     <body>
-        <!-- <div class="modal fade" tabindex="-1" role="dialog" id='startModal'>
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" id='modal-content'>
+
+        <div id="modalID" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
                 </div>
             </div>
-        </div> -->
-
-        <!-- blank modal template -->
-<div id="modalID" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- the .setContent() method will update this element's HTML -->
-      </div>
-    </div>
-  </div>
+        </div>
         <nav class="navbar navbar-expand-lg teal-color">
                 <p class='title'>weather</p><p class='titleNav'>NAV</p>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +65,9 @@
                         </div>
                         <div class="parentDisplay" id="stepDisplayParent">
                             <div class="childDisplay"id="stepDisplay">
-                                <table id='stepTable'></table>
+                                <table id='stepTable'>
+
+                                </table>
                             </div>
                         </div>
                     </div>   
@@ -84,10 +78,8 @@
         <script src="https://cdn.jsdelivr.net/npm/places.js@1.14.0"></script>
         <!-- V4 version -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.js"></script>
         <script src="./js/moment-timezone.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
         <script src='./js/login.js'></script>
         <script src="./js/weatherSearch.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkF-hra6n9sSK68j3sfrxR57ml-O4tlI4"></script>

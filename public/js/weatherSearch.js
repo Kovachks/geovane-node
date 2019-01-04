@@ -27,19 +27,19 @@ document.addEventListener('DOMContentLoaded', function(){
         document.getElementById('stepTable').innerHTML = ''
 
         // Grabbing user entered data
-        let startCity = document.getElementById('startCity').nodeValue;
-        let endCity = document.getElementById('endCity').nodeValue;
+        let startCity = document.getElementById('startCity').value;
+        let endCity = document.getElementById('endCity').value;
         let traffic = false;
 
         // Check value of input (currently disabled)
-        if (document.getElementById('traffic').checked === true) {
-            traffic = true;
-        }
+        // if (document.getElementById('traffic').checked === true) {
+        //     traffic = true;
+        // }
 
         // Grab user token if logged in
         let user = window.sessionStorage.getItem('accessToken=')
 
-        document.getElementById('resultsContainer').style.display = 'block'
+        // document.getElementById('resultsContainer').style.display = 'block'
 
         let searchData = {
             startCity: startCity,
@@ -54,79 +54,67 @@ document.addEventListener('DOMContentLoaded', function(){
 
         let request = new XMLHttpRequest();
 
-        
+        request.open('POST', '/search');
 
+        request.setRequestHeader('Content-Type', 'application/JSON');
 
+        request.onload = function() {
 
-    })
+            let data = JSON.parse(request.response)
 
-    //Click handler for our main Search
-    $(document).on("click", "#search", function() {
+            //Calling initmap function for generation of google map
+            initMap(data)
 
-        //Grabbing user entered data
-        let startCity = $("#startCity").val()
-        let endCity = $("#endCity").val()
-        let traffic = $("#traffic").is(":checked")
+            // Creating table header and start data for weather data
+            let weatherTable = '<tr><th>Step</th><th>Weather</th><th>Location</th><th>Temp.</th><th>Precip.</th><th>Arrival Time</th></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
+            '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr>'
 
-        //Also grabbing user token if logged in or from Session Storage
-        let user = window.localStorage.getItem("user")
+            //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
+            for (var i = 0; i < data.allSteps.length; i += 1) {
+                var counter = i + 1
 
-        //hiding/showing relavent containers
-        // $("#searchDiv").hide()
-        // $("#newTrip").show()
-        $("#resultsContainer").show()
+                weatherTable += '<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
+                '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
+                Math.round(data.allSteps[i].currentTemp) + '</td><td>' + Math.round((data.allSteps[i].precip * 100)) + '%</td><td>' + moment().tz(data.allSteps[i].stepTimeZone).add(data.allSteps[i].time, 'm').format('LT') + ' ' + moment().tz(data.allSteps[i].stepTimeZone).zoneAbbr() + '</td></tr>'
+            }
+            
+            // Appending end step to data collected for weather table
+            weatherTable += '<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
+            '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr>'
 
-        //Completing our searchData object to pass to the server
-        var searchData = {
+            console.log(weatherTable)
+
+            document.getElementById('weatherTable').innerHTML = weatherTable
+
+            // Creating header for table
+            let stepTable = '<tr><th>Direction</th><th>Time/Distance</th></tr>'
+
+            // Add each individual step to the string we are creating
+            for (let k = 0; k < data.directions.length; k++) {
+                stepTable += '<tr><td>' + data.directions[k].html_instructions + '</td><td>' + data.directions[k].duration.text + "/" + data.directions[k].distance.text + '</td></tr>'
+            }
+
+            //Append concatenated string using InnerHTML
+            document.getElementById('stepTable').innerHTML = stepTable
+            
+        }
+
+        // Send Data for weather search to server
+        request.send(JSON.stringify({
             startCity: startCity,
             endCity: endCity,
             user: user,
             options: {
                 traffic: traffic
             }
-        } 
+        }))
 
-        console.log(searchData)
 
-        //Ajax call in order to send our searched data to the server
-        $.ajax({
-            method: "POST",
-            url: "/search",
-            data: searchData
-        }).then(function(data) {
-                    
-            //Calling initmap function for generation of google map
-            initMap(data)
-
-            // Creating table elements for directions display
-            $("#stepDisplay table").append('<tr><th>Direction</th><th>Time/Distance</th></tr>')
-
-            for (let k = 0; k < data.directions.length; k ++) {
-                $("#stepDisplay table").append('<tr><td>' + data.directions[k].html_instructions + '</td><td>' + data.directions[k].duration.text + "/" + data.directions[k].distance.text + '</td></tr>')
-            }
-
-            // creating table elements for weather display
-            $("#weatherDisplay table").append('<tr><th>Step</th><th>Weather</th><th>Location</th><th>Temp.</th><th>Precip.</th><th>Arrival Time</th></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
-            '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr></tbody></table>')
-
-            //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
-            for (var i = 0; i < data.allSteps.length; i += 1) {
-                var counter = i + 1
-                $("#weatherDisplay table").append('<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
-                '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
-                Math.round(data.allSteps[i].currentTemp) + '</td><td>' + Math.round((data.allSteps[i].precip * 100)) + '%</td><td>' + moment().tz(data.allSteps[i].stepTimeZone).add(data.allSteps[i].time, 'm').format('LT') + ' ' + moment().tz(data.allSteps[i].stepTimeZone).zoneAbbr() + '</td></tr>')
-            }
-            
-            //Finishing off the table with the end points data
-            $("#weatherDisplay table").append('<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
-            '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr></tbody></table>')
-        })
-            
-        $(".tableDisplay").show()
     })
 
     //Function for generating google map
-    function initMap(data) {
+    const initMap = data =>  {
+        console.log(data)
 
         let markerObject = []
 
@@ -226,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     //Function for displaying our route on our google map initiated above
-    function displayRoute(origin, destination, service, display, markerObject) {
+    const displayRoute = (origin, destination, service, display, markerObject) => {
 
     //Creating up to 5 midpoints in order to increase likelyhood of google directions matching the map directions route
         let midStop1 = parseInt(markerObject.length / 5);
