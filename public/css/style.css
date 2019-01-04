@@ -75,12 +75,13 @@ button {
 }
 #stepDisplayParent{
     background-color: white;
+    display: none;
 }
 #stepDisplay > table > tbody > tr > td {
     border-top: 1px solid black;
 }
-#weatherDisplay > table > tbody > tr {
-    border-bottom: 1px solid black;
+#weatherDisplay > table > tbody > tr > td{
+    border-top: 1px solid black;
     height: 50px;
 }
 table {
