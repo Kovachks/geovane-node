@@ -130,7 +130,6 @@ const login = () => {
             else if (data.login === true){
 
                 // Hiding elements no longer relevant after login is successful
-                // document.getElementById('loginDiv').style.visibility = 'hidden';
                 document.getElementById('loginButton').style.visibility = 'hidden';
                 document.getElementById('signupButton').style.visibility = 'hidden';
 

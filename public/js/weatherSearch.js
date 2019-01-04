@@ -1,38 +1,72 @@
-$("#stepDisplayParent").hide()
-$(".tableDisplay").hide()
-$(".resultsInner").hide()
-
-$(document).ready(function() {
-
-    //Toggle to direction display
-    $("#stepToggle").on("click", function() {
-        $("#weatherDisplayParent").hide()
-        $("#stepDisplayParent").show()
-        $("#stepToggle").removeClass('unselected').addClass('selected')
-        $("#weatherToggle").removeClass('selected').addClass('unselected')
+// Wait to complete page load
+document.addEventListener('DOMContentLoaded', function(){ 
+    
+    // Switch to directional data
+    document.getElementById('stepToggle').addEventListener('click', function(e) {
+        document.getElementById('weatherDisplayParent').style.display = 'none';
+        document.getElementById('stepDisplayParent').style.display = 'block';
+        document.getElementById('stepToggle').classList.remove('unselected')
+        document.getElementById('stepToggle').classList.add('selected')
+        document.getElementById('weatherToggle').classList.remove('selected')
+        document.getElementById('weatherToggle').classList.add('unselected');
     })
 
-    //Toggle to weather display
-    $("#weatherToggle").on("click", function() {
-        $("#stepDisplayParent").hide()
-        $("#weatherDisplayParent").show()
-        $("#weatherToggle").removeClass('unselected').addClass('selected')
-        $("#stepToggle").removeClass('selected').addClass('unselected')
+    // Switch to weather data
+    document.getElementById('weatherToggle').addEventListener('click', function() {
+        document.getElementById('stepDisplayParent').style.display = 'none';
+        document.getElementById('weatherDisplayParent').style.display = 'block';
+        document.getElementById('weatherToggle').classList.remove('unselected');
+        document.getElementById('weatherToggle').classList.add('selected');
+        document.getElementById('stepToggle').classList.remove('selected');
+        document.getElementById('stepToggle').classList.add('unselected');
+    })
+
+    document.getElementById('search').addEventListener('click', function(e) {
+        document.getElementById('resultsInner').style.display = 'block';
+        document.getElementById('weatherTable').innerHTML = ''
+        document.getElementById('stepTable').innerHTML = ''
+
+        // Grabbing user entered data
+        let startCity = document.getElementById('startCity').nodeValue;
+        let endCity = document.getElementById('endCity').nodeValue;
+        let traffic = false;
+
+        // Check value of input (currently disabled)
+        if (document.getElementById('traffic').checked === true) {
+            traffic = true;
+        }
+
+        // Grab user token if logged in
+        let user = window.sessionStorage.getItem('accessToken=')
+
+        document.getElementById('resultsContainer').style.display = 'block'
+
+        let searchData = {
+            startCity: startCity,
+            endCity: endCity,
+            user: user,
+            options: {
+                traffic: traffic
+            }
+        }
+
+        console.log(searchData)
+
+        let request = new XMLHttpRequest();
+
+        
+
+
+
     })
 
     //Click handler for our main Search
     $(document).on("click", "#search", function() {
 
-        $(".resultsInner").show()
-        //Empty previous searches if any
-        $("#weatherDisplay table").empty()
-        $("#stepDisplay table").empty()
-
         //Grabbing user entered data
         let startCity = $("#startCity").val()
         let endCity = $("#endCity").val()
         let traffic = $("#traffic").is(":checked")
-        console.log(traffic)
 
         //Also grabbing user token if logged in or from Session Storage
         let user = window.localStorage.getItem("user")
@@ -60,9 +94,7 @@ $(document).ready(function() {
             url: "/search",
             data: searchData
         }).then(function(data) {
-            
-            console.log("THIS IS THE DATA " + JSON.stringify(data.directions[0].duration.text))
-            
+                    
             //Calling initmap function for generation of google map
             initMap(data)
 
@@ -93,21 +125,10 @@ $(document).ready(function() {
         $(".tableDisplay").show()
     })
 
-    //Click handler for querying a new trip
-    $(document).on("click", "#newTrip", function() {
-        $("#searchDiv").show()
-        $("#newTrip").hide()
-        $("#resultsContainer").hide()
-        $("#signupDiv").hide()
-        $("#loginDiv").hide()
-        $("#signupButton").show()
-        $("#loginButton").show()
-    })
-
     //Function for generating google map
     function initMap(data) {
 
-        var markerObject = []
+        let markerObject = []
 
         //Looping through all the invidual steps in order to build out our marker object to post markers on the map
         for (let i = 0; i < data.allSteps.length; i += 1) {
@@ -121,23 +142,23 @@ $(document).ready(function() {
         // console.log(markerObject)
 
         //creating map opject that centers on the start lat/lng
-        var map = new google.maps.Map(document.getElementById('map'), {
+        let map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: data.startGps
         });
 
         //creating variable for the Google Directions Service
-        var directionsService = new google.maps.DirectionsService;
+        let directionsService = new google.maps.DirectionsService;
 
         //Creating variable for the Google Directions Render and passing the map.  Supressing start and end markers that google provides.  we'll provide our own.
-        var directionsDisplay = new google.maps.DirectionsRenderer({
+        let directionsDisplay = new google.maps.DirectionsRenderer({
             draggable: true,
             map: map,
             suppressMarkers: true
         });
 
         //Creating weather marker for the start of the trip
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
         position: data.startGps,
         map: map,
         //   icon: "./images/testMarker1.png"
@@ -177,9 +198,9 @@ $(document).ready(function() {
             trafficLayer.setMap(map);
         }
         
-        if(markerObject[0]) {
+        if (markerObject[0]) {
         //Looping through our markerObject to create a new google maps marker with each identified step which qualifies
-            for (var i = 0; i < markerObject.length; i += 1) {
+            for (let i = 0; i < markerObject.length; i += 1) {
                 marker = new google.maps.Marker({
                     position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
                     map:map,
@@ -206,13 +227,13 @@ $(document).ready(function() {
 
     //Function for displaying our route on our google map initiated above
     function displayRoute(origin, destination, service, display, markerObject) {
-    
+
     //Creating up to 5 midpoints in order to increase likelyhood of google directions matching the map directions route
-        var midStop1 = parseInt(markerObject.length / 5);
-        var midStop2 = parseInt(markerObject.length * 2 / 5);
-        var midStop3 = parseInt(markerObject.length * 3 / 5);
-        var midStop4 = parseInt(markerObject.length * 4 / 5);
-        var lateStop = parseInt(markerObject.length - 1); 
+        let midStop1 = parseInt(markerObject.length / 5);
+        let midStop2 = parseInt(markerObject.length * 2 / 5);
+        let midStop3 = parseInt(markerObject.length * 3 / 5);
+        let midStop4 = parseInt(markerObject.length * 4 / 5);
+        let lateStop = parseInt(markerObject.length - 1); 
 
         //Setting the directions route and also adding in the waypoints defined above.
         
@@ -268,4 +289,7 @@ $(document).ready(function() {
             });
         }
     }
-})
+
+}, false);
+
+    

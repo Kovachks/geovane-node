@@ -172,11 +172,12 @@ td {
     width: 100%;
     margin-bottom: 5px;
 }
-.resultsInner {
+#resultsInner {
     width: 90%;
     margin: 0 auto;
     padding: 0;
     height: calc(100% - 160px);
+    display: none;
 }
 .teal-color {
     background-color: #68BDEA;
@@ -217,7 +218,7 @@ and (max-device-width: 1028px) {
     .ap-icon-pin {
         height: calc(100%-3px);
     }
-    .resultsInner {
+    #resultsInner {
         height: calc(100% - 100px);
         width: 100%;
         padding-top: 2px;
@@ -304,7 +305,7 @@ and (max-device-width : 550px) {
         width: 100%;
         border: none;
     }
-    .resultsInner {
+    #resultsInner {
         position: absolute;
         top: 100%;
         width: 100%;
