@@ -172,7 +172,12 @@ const login = () => {
                         let myModalInstance = new Modal(myModal)
                         myModalInstance.hide()
                     }
-                        
+
+                    // Grabbing dropdown menu element created above
+                    let myDropdown = document.getElementById('dropdownMenuButton')
+                    
+                    // Initiate dropdown functionality for bootstrap dropdown menu
+                    let myDropdownInit = new Dropdown (myDropdown);
                 }
 
                 // Sending sccessToken if detected

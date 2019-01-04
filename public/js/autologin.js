@@ -38,6 +38,12 @@ if (sessionStorage.getItem('accessToken=')) {
           
             }    
         }
+
+        // Grabbing dropdown menu element created above
+        let myDropdown = document.getElementById('dropdownMenuButton')
+        
+        // Initiate dropdown functionality for bootstrap dropdown menu
+        let myDropdownInit = new Dropdown (myDropdown);
     }
 
     // Send access token data to Firebase for validation
