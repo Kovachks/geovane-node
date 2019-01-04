@@ -8,6 +8,6 @@ Node/Express based application for overlaying weather data onto a user requested
 
     Creating more map icons
     Improving logic for selection of map markers
-    include firebase authentication
+    include firebase authentication -- Complete
     Style site
-    Enhance load speed for mobile
+    Enhance load speed for mobile -- Partial Completion (JQuery removal)
