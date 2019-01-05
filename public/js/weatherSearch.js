@@ -1,24 +1,31 @@
 // Wait to complete page load
 document.addEventListener('DOMContentLoaded', function(){ 
-    
+        
+    const weatherDisplayParent = document.getElementById('weatherDisplayParent')
+    const stepDisplayParent = document.getElementById('stepDisplayParent')
+    const stepToggle = document.getElementById('stepToggle')
+    const weatherToggle = document.getElementById('weatherToggle')
+
+
     // Switch to directional data
-    document.getElementById('stepToggle').addEventListener('click', function(e) {
-        document.getElementById('weatherDisplayParent').style.display = 'none';
-        document.getElementById('stepDisplayParent').style.display = 'block';
-        document.getElementById('stepToggle').classList.remove('unselected')
-        document.getElementById('stepToggle').classList.add('selected')
-        document.getElementById('weatherToggle').classList.remove('selected')
-        document.getElementById('weatherToggle').classList.add('unselected');
+    stepToggle.addEventListener('click', function(e) {
+        weatherDisplayParent.style.display = 'none';
+        stepDisplayParent.style.display = 'block';
+        stepToggle.classList.remove('unselected')
+        stepToggle.classList.add('selected')
+        weatherToggle.classList.remove('selected')
+        weatherToggle.classList.add('unselected');
     })
 
     // Switch to weather data
-    document.getElementById('weatherToggle').addEventListener('click', function() {
-        document.getElementById('stepDisplayParent').style.display = 'none';
-        document.getElementById('weatherDisplayParent').style.display = 'block';
-        document.getElementById('weatherToggle').classList.remove('unselected');
-        document.getElementById('weatherToggle').classList.add('selected');
-        document.getElementById('stepToggle').classList.remove('selected');
-        document.getElementById('stepToggle').classList.add('unselected');
+    weatherToggle.addEventListener('click', function() {
+
+        stepDisplayParent.style.display = 'none';
+        weatherDisplayParent.style.display = 'block';
+        weatherToggle.classList.remove('unselected');
+        weatherToggle.classList.add('selected');
+        stepToggle.classList.remove('selected');
+        stepToggle.classList.add('unselected');
     })
 
     document.getElementById('search').addEventListener('click', function(e) {
@@ -38,19 +45,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
         // Grab user token if logged in
         let user = window.sessionStorage.getItem('accessToken=')
-
-        // document.getElementById('resultsContainer').style.display = 'block'
-
-        let searchData = {
-            startCity: startCity,
-            endCity: endCity,
-            user: user,
-            options: {
-                traffic: traffic
-            }
-        }
-
-        console.log(searchData)
 
         let request = new XMLHttpRequest();
 

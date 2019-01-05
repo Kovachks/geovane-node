@@ -281,8 +281,18 @@ and (orientation: landscape) {
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 550px) {
+    .algolia-places {
+        height: 25px;
+        margin-bottom: 5px
+    }
+    .ap-input {
+        height: 25px;
+    }
     td {
         font-size: 16px;
+    }
+    tr {
+        height: 20px;
     }
     body {
         width: 100%;
@@ -299,10 +309,10 @@ and (max-device-width : 550px) {
     }
     .resultsContainer {
         position: absolute;
-        top: 200px;
+        top: 170px;
         left: 0;
         margin-left: 0px;
-        height: calc(100% - 250px);
+        height: calc(100% - 220px);
         width: 100%;
         border: none;
     }
@@ -313,7 +323,7 @@ and (max-device-width : 550px) {
     }
     .searchInner {
         padding: 5px 0 0 0;
-        height: 145px;
+        height: 110px;
     }
     #mainBody {
         background-color: #68BDEA;
