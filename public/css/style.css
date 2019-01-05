@@ -291,6 +291,12 @@ and (max-device-width : 550px) {
     td {
         font-size: 16px;
     }
+    .gmnoprint {
+        display: none;
+    }
+    .gm-svpc {
+        display: none;
+    }
     tr {
         height: 20px;
     }
