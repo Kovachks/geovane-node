@@ -1,6 +1,6 @@
 // Wait to complete page load
 document.addEventListener('DOMContentLoaded', function(){ 
-        
+
     const weatherDisplayParent = document.getElementById('weatherDisplayParent')
     const stepDisplayParent = document.getElementById('stepDisplayParent')
     const stepToggle = document.getElementById('stepToggle')
