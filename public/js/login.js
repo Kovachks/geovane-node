@@ -4,10 +4,10 @@ let myModal = document.getElementById('modalID')
 document.getElementById('signupButton').addEventListener('click', function(e) {
 
     // Creating container for modal content
-    let modalContentSignup = "<div class='modal-header'><h4 class='modalTitle'>Singup</h4><button type='button' class='close'" +
+    let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Singup</p><button type='button' class='close'" +
     "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-    "<div class='modal-body'><h5>Email</h5>" + 
-    "<input placeholder='Email' type='text' id='email'><h5>Password</h5><input placeholder='Password' type='password' id='password'>" + 
+    "<div class='modal-body'><p class='signupHeader'>Email</p>" + 
+    "<input placeholder='Email' type='text' id='email'><p class='signupHeader'>Password</p><input placeholder='Password' type='password' id='password'>" + 
     "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup' onclick='signup()'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
     
     // Initializing new modal
@@ -25,10 +25,10 @@ document.getElementById('signupButton').addEventListener('click', function(e) {
 document.getElementById('loginButton').addEventListener('click', function() {
 
     // Setting content for modal
-    let modalContentSignup = "<div class='modal-header'><h4 class='modalTitle'>Login</h4><button type='button' class='close'" +
+    let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Login</p><button type='button' class='close'" +
     "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-    "<div class='modal-body'><h5>Email</h5><input placeholder='Email' type='text' id='loginEmail'><h5>Password</h5><input placeholder='Password'" + 
-    "type='password' id='loginPassword'></div><div class='modal-footer'><div id='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
+    "<div class='modal-body'><div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Email</span></div> <input type='text' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginEmail'></div>" +
+    "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Password</span></div> <input type='password' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginPassword'></div><div class='modal-footer'><div id='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
     
     // Initializing modal using modal content
     let modalInitJS = new Modal(myModal, {
@@ -121,9 +121,11 @@ const login = () => {
 
             // If login failed display below text
             if (data.login === false) {
-
+                // console.log(data)
                 // Show incorrect login message
                 document.getElementById('incorrect').style.display = 'inline';
+                document.getElementById('incorrect').innerHTML = data.message;
+                
             }
 
             // If login was successful show correct HTML elements
@@ -166,7 +168,7 @@ const login = () => {
                             document.getElementById('signedIn').innerHTML = "<div class='dropdown'><button class='btn btn-sm btn-outline-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
                             + authenticateData.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href=''>Account</a><a class='dropdown-item' href=''>Recent Searches</a><a class='dropdown-item' id='logout' onclick='logout()' href=''>Logout</a></div></div>";
 
-                        }    
+                        }     
 
                         // Hiding modal after successful login
                         let myModalInstance = new Modal(myModal)

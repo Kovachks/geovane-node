@@ -1,3 +1,7 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
 #searchDiv {
     position: absolute;
     left: 0;
@@ -62,10 +66,16 @@
 #signupDiv {
     display: none;
 }
+.signupHeader {
+    margin-bottom: 0;
+}
+.input-group-text
 .modalTitle {
     width: 70%;
     margin-right: 0;
     display: inline-block;
+    font-size: 20px;
+    margin-bottom: 0;
 }
 button {
     margin: 0 5px;

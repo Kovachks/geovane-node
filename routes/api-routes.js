@@ -107,7 +107,7 @@ module.exports = function(app) {
 
     app.post("/login", function(req, res) {
         console.log(req.body)
-
+        let data = {}
         firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password).then(function(user) {
             var userCheck = firebase.auth().currentUser
             if (userCheck.emailVerified === true) {
@@ -121,7 +121,7 @@ module.exports = function(app) {
                 firebase.auth().signOut().then(function() {
                     data.message = "Please verify your email in order to login."
                     data.login = false
-                    res.send("Please verify your email in order to login.")
+                    res.send(data)
                 })
             }
         }).catch(function(error) {
