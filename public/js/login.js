@@ -4,12 +4,11 @@ let myModal = document.getElementById('modalID')
 document.getElementById('signupButton').addEventListener('click', function(e) {
 
     // Creating container for modal content
-    let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Singup</p><button type='button' class='close'" +
+    let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Signup</p><button type='button' class='close'" +
     "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-    "<div class='modal-body'><p class='signupHeader'>Email</p>" + 
-    "<input placeholder='Email' type='text' id='email'><p class='signupHeader'>Password</p><input placeholder='Password' type='password' id='password'>" + 
-    "</div><div class='modal-footer'><button type='button' class='btn btn-sm btn-outline-secondary'  id='signup' onclick='signup()'>Submit</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
-    
+    "<div class='modal-body'><div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Email</span></div> <input type='text' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='email'></div>" +
+    "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Password</span></div> <input type='password' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='password'></div><div class='modal-footer'><div id='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
+
     // Initializing new modal
     let modalInitJS = new Modal(myModal, {
         content: modalContentSignup,

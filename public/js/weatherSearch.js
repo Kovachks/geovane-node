@@ -29,19 +29,23 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 
     document.getElementById('search').addEventListener('click', function(e) {
-        document.getElementById('resultsInner').style.display = 'block';
-        document.getElementById('weatherTable').innerHTML = ''
-        document.getElementById('stepTable').innerHTML = ''
 
         // Grabbing user entered data
         let startCity = document.getElementById('startCity').value;
         let endCity = document.getElementById('endCity').value;
         let traffic = false;
+        
+        if (startCity === "" || endCity === "") {
+            
+            document.getElementById('errorMessage').style.display = 'block';
 
-        // Check value of input (currently disabled)
-        // if (document.getElementById('traffic').checked === true) {
-        //     traffic = true;
-        // }
+            return
+        }
+
+        document.getElementById('errorMessage').style.display = 'none'
+        document.getElementById('resultsInner').style.display = 'block';
+        document.getElementById('weatherTable').innerHTML = ''
+        document.getElementById('stepTable').innerHTML = ''
 
         // Grab user token if logged in
         let user = window.sessionStorage.getItem('accessToken=')

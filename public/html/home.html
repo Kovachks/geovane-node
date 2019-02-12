@@ -49,6 +49,7 @@
                     <!-- <button class='btn btn-sm btn-outline-secondary' type='button' id='getLocation'>Use your Location</button> -->
                     <input type="text" id="endCity" placeholder="End Location">
                     <button type='button' class='btn btn-sm btn-outline-secondary' id="search">Search</button>
+                    <div id='errorMessage'>Please enter a valid search</div>
                 </div>
                 <div class='resultsInner' id='resultsInner'>
                     <div class="tableDisplay" id="tripDistance">
@@ -69,9 +70,7 @@
                         </div>
                         <div class="parentDisplay" id="stepDisplayParent">
                             <div class="childDisplay"id="stepDisplay">
-                                <table id='stepTable'>
-
-                                </table>
+                                <table id='stepTable'></table>
                             </div>
                         </div>
                     </div>   
