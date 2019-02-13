@@ -4,6 +4,12 @@ body {
 tr {
     height: 30px;
 }
+input {
+    color: grey;
+}
+.dropdown-item {
+    color: grey;
+}
 #searchDiv {
     position: absolute;
     left: 0;
@@ -87,6 +93,7 @@ tr {
     display: inline-block;
     font-size: 20px;
     margin-bottom: 0;
+    color: grey;
 }
 button {
     margin: 0 5px;
