@@ -1,7 +1,9 @@
 body {
     font-family: 'Noto Sans', sans-serif;
 }
-
+tr {
+    height: 30px;
+}
 #searchDiv {
     position: absolute;
     left: 0;
