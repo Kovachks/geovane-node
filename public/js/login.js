@@ -1,7 +1,7 @@
 let myModal = document.getElementById('modalID')
 
 // Adding event listener to start the signup process
-document.getElementById('signupButton').addEventListener('click', function(e) {
+document.getElementById('signupButton').addEventListener('click', (e) => {
 
     // Creating container for modal content
     let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Signup</p><button type='button' class='close'" +
@@ -21,13 +21,34 @@ document.getElementById('signupButton').addEventListener('click', function(e) {
 }, false)
 
 // Adding event listener to start login process
-document.getElementById('loginButton').addEventListener('click', function() {
+document.getElementById('loginButton').addEventListener('click', () => {
 
     // Setting content for modal
-    let modalContentSignup = "<div class='modal-header'><p class='modalTitle'>Login</p><button type='button' class='close'" +
-    "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-    "<div class='modal-body'><div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Email</span></div> <input type='text' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginEmail'></div>" +
-    "<div class='input-group mb-3'><div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-default'>Password</span></div> <input type='password' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginPassword'></div><div class='modal-footer'><div id='incorrect'>Password Incorrect</div><button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button><button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button></div>"
+    let modalContentSignup = 
+        `<div class='modal-header'>
+            <p class='modalTitle'>Login</p>
+            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <div class='modal-body'>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' id='inputGroup-sizing-default'>Email</span>
+                </div> 
+                <input type='text' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginEmail'>
+            </div>
+            <div class='input-group mb-3'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' id='inputGroup-sizing-default'>Password</span>
+                </div>
+                <input type='password' class='form-control' aria-label='Default' aria-describedby='inputGroup-sizing-default' id='loginPassword'>
+            </div>
+            <div class='modal-footer'>
+                <div id='incorrect'>Password Incorrect</div>
+                <button type='button' class='btn btn-sm btn-outline-secondary' id='login' onclick=login()>Login</button>
+                <button type='button' class='btn btn-sm btn-outline-secondary' id='cancel' data-dismiss='modal'>Cancel</button>
+            </div>`
     
     // Initializing modal using modal content
     let modalInitJS = new Modal(myModal, {
@@ -57,7 +78,7 @@ const signup = () => {
     request.setRequestHeader('Content-Type', 'application/JSON');
 
     // On response from server run below function
-    request.onload = function() {
+    request.onload = () => {
 
         // If successful signup run below
         if (request.status = 200) {
@@ -65,20 +86,29 @@ const signup = () => {
             // Parse out response from server
             let data = JSON.parse(request.responseText)
 
-            console.log(data)
-
             // If email is detected show message to chec kemail for verification
             if (data.email) {
 
-                let modalContentSuccessfulSignup = "<div class='modal-header'><h3 class='modalTitle'>Signup Successful</h3><button type='button' class='close'" +
-                "data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" + 
-                "<div class='modal-footer'><p>Account creation successful! Please check your email for a verification link to complete the authentication process.</p><button id='cancel' data-dismiss='modal'>Close</button></div>"
+                // Create content for modal
+                let modalContentSuccessfulSignup = 
+                `<div class='modal-header'>
+                    <h3 class='modalTitle'>Signup Successful</h3>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-footer'>
+                    <p>Account creation successful! Please check your email for a verification link to complete the authentication process.</p>
+                    <button id='cancel' data-dismiss='modal'>Close</button>
+                </div>`
 
+                // Create new modal instance with above content
                 let modalInitJS = new Modal (myModal, {
                     content: modalContentSuccessfulSignup,
                     backdrop: 'static'
                 })
 
+                // Display modal
                 modalInitJS.show()
 
             }
@@ -89,8 +119,6 @@ const signup = () => {
         email: email,
         password: password
     }))
-
-
 }
 
 // Login function for dynamically generated signin button
@@ -110,7 +138,7 @@ const login = () => {
     request.setRequestHeader('Content-Type', 'application/JSON');
     
     // On response run below function
-    request.onload = function() {
+    request.onload = () => {
 
         // If successful response run below
         if (request.status = 200) {
@@ -120,7 +148,6 @@ const login = () => {
 
             // If login failed display below text
             if (data.login === false) {
-                // console.log(data)
                 // Show incorrect login message
                 document.getElementById('incorrect').style.display = 'inline';
                 document.getElementById('incorrect').innerHTML = data.message;
@@ -147,7 +174,7 @@ const login = () => {
                 authenticateRequest.setRequestHeader('Content-Type', 'application/JSON');
 
                 //On response from server run below function to set logged in parameters
-                authenticateRequest.onload = function() {
+                authenticateRequest.onload = () => {
 
                     // If successful login set HTML elements
                     if (authenticateRequest.status = 200) {
@@ -164,39 +191,45 @@ const login = () => {
                             document.getElementById('signedIn').style.display = 'inline';
                             
                             // Add drop down options
-                            document.getElementById('signedIn').innerHTML = "<div class='dropdown'><button class='btn btn-sm btn-outline-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"
-                            + authenticateData.email + "</button><div class='dropdown-menu' aria-labelledy='dropdownMenuButton'><a class='dropdown-item' href=''>Account</a><a class='dropdown-item' href=''>Recent Searches</a><a class='dropdown-item' id='logout' onclick='logout()' href=''>Logout</a></div></div>";
+                            document.getElementById('signedIn').innerHTML = 
+                            `<div class='dropdown'>
+                                <button class='btn btn-sm btn-outline-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    ${authenticateData.email}
+                                </button>
+                                <div class='dropdown-menu' aria-labelledy='dropdownMenuButton'>
+                                    <a class='dropdown-item' href='${authenticateData.email}'>Account</a>
+                                    <a class='dropdown-item' href=''>Recent Searches</a>
+                                    <a class='dropdown-item' id='logout' onclick='logout()' href=''>Logout</a>
+                                </div>
+                            </div>`;
 
-                        }     
-
+                        };     
                         // Hiding modal after successful login
                         let myModalInstance = new Modal(myModal)
                         myModalInstance.hide()
-                    }
+                    };
 
                     // Grabbing dropdown menu element created above
                     let myDropdown = document.getElementById('dropdownMenuButton')
                     
                     // Initiate dropdown functionality for bootstrap dropdown menu
                     let myDropdownInit = new Dropdown (myDropdown);
-                }
+                };
 
                 // Sending sccessToken if detected
                 authenticateRequest.send(JSON.stringify({
                     accessToken: sessionStorage.getItem("accessToken=")
-                }))
-
-
-            }
-        }
-    }
+                }));
+            };
+        };
+    };
 
     // Send email and password to authenticate
     request.send(JSON.stringify({
         email: email,
         password: password
-    }))
-}
+    }));
+};
 
 
 // Logout function
@@ -211,21 +244,20 @@ const logout = () => {
     request.setRequestHeader('Content-Type', 'application/JSON');
     
     // On response run below function
-    request.onload = function() {
+    request.onload = () => {
 
         // If a successful logout is acheived run below code
         if (request.status = 200) {
 
         // Removing access token if successfully logged out
-        sessionStorage.removeItem('accessToken=')
+        sessionStorage.removeItem('accessToken=');
 
         // Hide and show relevant elements after logout is successful
-        document.getElementById('loginButton').style.display = 'inline'
-        document.getElementById('loginButton').style.visibility = 'initial'
+        document.getElementById('loginButton').style.display = 'inline';
+        document.getElementById('loginButton').style.visibility = 'initial';
         document.getElementById('signupButton').style.display = 'inline';
         document.getElementById('signupButton').style.visibility = 'initial';
-        document.getElementById('signedIn').style.display = 'none'  
-
+        document.getElementById('signedIn').style.display = 'none';  
         }
 
     }

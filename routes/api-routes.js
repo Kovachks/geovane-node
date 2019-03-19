@@ -1,24 +1,23 @@
 //NPM's
 var router = require("express").Router();
-var firebase = require("firebase")
-var config = require("../config/config.js")
-var googleMapsClient = require("@google/maps")
-var request = require('request')
-var weather = require('weather-js')
-var Forecast = require('forecast')
-var passwordHash = require('password-hash')
-var geocoder = require('geocoder')
-var cities = require('smart-city-finder')
-var geoTz= require('geo-tz')
-var config = require("../config/config.js")
-// var config = require("../config/config.js")
+var firebase = require("firebase");
+var config = require("../config/config.js");
+var googleMapsClient = require("@google/maps");
+var request = require('request');
+var weather = require('weather-js');
+var Forecast = require('forecast');
+var passwordHash = require('password-hash');
+var geocoder = require('geocoder');
+var cities = require('smart-city-finder');
+var geoTz= require('geo-tz');
+var config = require("../config/config.js");
 
 
 
 //Global Variables
-var database = firebase.database()
-var apiKey = process.env.googleDirectionsApiKey
-var sendData = {}
+var database = firebase.database();
+var apiKey = process.env.googleDirectionsApiKey;
+var sendData = {};
 
 // Initialize new forecast object to call weather info
 var forecast = new Forecast({
@@ -258,10 +257,10 @@ function weatherLoop(trip, sendData, res) {
 
 //Really bad function name.  Fix later
 function weatherLoopCall(trip, sendData, res, distance) {
+    
+    // 
     var j = 0
     var tripTime = 0
-    // console.log(trip.steps[8])
-    // console.log("trip array length" + trip.steps.length)
 
     //Looping through each step to determine if step is worth grabbing weather data for
     for(var i = 0; i < trip.steps.length; i += 1) {
@@ -271,7 +270,7 @@ function weatherLoopCall(trip, sendData, res, distance) {
 
         //Checking step distance against predetermined distance metric
         if (trip.steps[i].distance.value > distance) {
-            // console.log(sendData.tripTimeMinutes - (tripTime/60))
+
             //Checking to see if step is too close to end destination
             if(sendData.tripTimeMinutes - (tripTime/60) > 40) {
                 sendData.allSteps[j] = {
@@ -283,6 +282,7 @@ function weatherLoopCall(trip, sendData, res, distance) {
                     stepTimeZone: geoTz.tz(trip.steps[i].end_location.lat,trip.steps[i].end_location.lng)
                 }
             }
+            // Increment j + 1
             j += 1
             // console.log("This is greater than " + distance + " meters: " + trip.steps[i].distance.value)
         } else {

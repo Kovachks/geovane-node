@@ -1,5 +1,5 @@
 // Wait to complete page load
-document.addEventListener('DOMContentLoaded', function(){ 
+document.addEventListener('DOMContentLoaded', () => { 
 
     const weatherDisplayParent = document.getElementById('weatherDisplayParent')
     const stepDisplayParent = document.getElementById('stepDisplayParent')
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
     // Switch to directional data
-    stepToggle.addEventListener('click', function(e) {
+    stepToggle.addEventListener('click', () => {
         weatherDisplayParent.style.display = 'none';
         stepDisplayParent.style.display = 'block';
         stepToggle.classList.remove('unselected')
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 
     // Switch to weather data
-    weatherToggle.addEventListener('click', function() {
+    weatherToggle.addEventListener('click', () => {
 
         stepDisplayParent.style.display = 'none';
         weatherDisplayParent.style.display = 'block';
@@ -28,15 +28,15 @@ document.addEventListener('DOMContentLoaded', function(){
         stepToggle.classList.add('unselected');
     })
 
-    document.getElementById('search').addEventListener('click', function(e) {
+    document.getElementById('search').addEventListener('click', e => {
 
         // Grabbing user entered data
-        let startCity = document.getElementById('startCity').value;
-        let endCity = document.getElementById('endCity').value;
+        let startCity = document.getElementById('startCity').value.trim();
+        let endCity = document.getElementById('endCity').value.trim();
         let traffic = false;
         
+        // Check for empty inputs from user.
         if (startCity === "" || endCity === "") {
-            
             document.getElementById('errorMessage').style.display = 'block';
 
             return
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         request.setRequestHeader('Content-Type', 'application/JSON');
 
-        request.onload = function() {
+        request.onload = () => {
 
             let data = JSON.parse(request.response)
 
@@ -64,28 +64,61 @@ document.addEventListener('DOMContentLoaded', function(){
             initMap(data)
 
             // Creating table header and start data for weather data
-            let weatherTable = '<tr><th>Step</th><th>Weather</th><th>Location</th><th>Temp.</th><th>Precip.</th><th>Arrival Time</th></tr><tr>' + '<td>Start</td><td><img src="./images/' + data.startWeather + '.png"></td><td>' + data.startCity +
-            '</td><td>' + Math.round(data.startTemperature) + '</td><td>' + Math.round((data.startPrecip * 100)) + '%</td><td>' + moment().tz(data.startTimezone).format('LT') + ' ' + moment().tz(data.startTimezone).zoneAbbr() + '</td></tr>'
+            let weatherTable = 
+            `<tr>
+                <th>Step</th>
+                <th>Weather</th>
+                <th>Location</th>
+                <th>Temp.</th>
+                <th>Precip.</th>
+                <th>Arrival Time</th>
+            </tr>
+            <tr>
+                <td>Start</td>
+                <td><img src="./images/${data.startWeather}.png"></td>
+                <td>${data.startCity}</td>
+                <td>${Math.round(data.startTemperature)}</td>
+                <td>${Math.round((data.startPrecip * 100))}%</td>
+                <td>${moment().tz(data.startTimezone).format('LT')} ${moment().tz(data.startTimezone).zoneAbbr()}</td>
+            </tr>`
 
             //Looping through the invididual steps and concatinating onto our table completed above to build out and include all data
-            for (var i = 0; i < data.allSteps.length; i += 1) {
-                var counter = i + 1
+            for (let i = 0; i < data.allSteps.length; i += 1) {
+                let counter = i + 1
 
-                weatherTable += '<tr><td>' + counter + '</td><td><img src="./images/' + data.allSteps[i].currentWeather +
-                '.png"></td><td>' + data.allSteps[i].cityInfo.city + ", " + data.allSteps[i].cityInfo.state_abbr + '</td><td>' +
-                Math.round(data.allSteps[i].currentTemp) + '</td><td>' + Math.round((data.allSteps[i].precip * 100)) + '%</td><td>' + moment().tz(data.allSteps[i].stepTimeZone).add(data.allSteps[i].time, 'm').format('LT') + ' ' + moment().tz(data.allSteps[i].stepTimeZone).zoneAbbr() + '</td></tr>'
+                // Filling in the weather table data with each steps data
+                weatherTable += 
+                `<tr>
+                    <td>${counter}</td>
+                    <td><img src="./images/${data.allSteps[i].currentWeather}.png"></td>
+                    <td>${data.allSteps[i].cityInfo.city}, ${data.allSteps[i].cityInfo.state_abbr}</td>
+                    <td>${Math.round(data.allSteps[i].currentTemp)}</td>
+                    <td>${Math.round((data.allSteps[i].precip * 100))}%</td>
+                    <td>${moment().tz(data.allSteps[i].stepTimeZone).add(data.allSteps[i].time, 'm').format('LT')} ${moment().tz(data.allSteps[i].stepTimeZone).zoneAbbr()}</td>
+                </tr>`
             }
             
             // Appending end step to data collected for weather table
-            weatherTable += '<tr>' + '<td>End</td><td><img src="./images/' + data.endWeather + '.png"></td><td>' + data.endCity +
-            '</td><td>' + Math.round(data.endTemperature) + '</td><td>' + Math.round((data.endPrecip * 100)) + '%</td><td>' + moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT') + ' ' + moment().tz(data.endTimezone).zoneAbbr() + '</td></tr>'
+            weatherTable += 
+            `<tr>
+                <td>End</td>
+                <td>
+                    <img src="./images/${data.endWeather}.png">
+                </td>
+                <td>${data.endCity}</td>
+                <td>${Math.round(data.endTemperature)}</td>
+                <td>${Math.round((data.endPrecip * 100))}%</td>
+                <td>${moment().tz(data.endTimezone).add(data.tripTimeMinutes, 'm').format('LT')} ${moment().tz(data.endTimezone).zoneAbbr()}</td>
+            </tr>`
 
-            console.log(weatherTable)
-
+            // Append weather table to the table element
             document.getElementById('weatherTable').innerHTML = weatherTable
 
             // Creating header for table
-            let stepTable = '<tr><th>Direction</th><th>Time/Distance</th></tr>'
+            let stepTable = `<tr>
+                                <th>Direction</th>
+                                <th>Time/Distance</th>
+                            </tr>`
 
             // Add each individual step to the string we are creating
             for (let k = 0; k < data.directions.length; k++) {
@@ -100,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         }
 
+        // Sending data object to server
         request.send(JSON.stringify({
             startCity: startCity,
             endCity: endCity,
@@ -107,14 +141,11 @@ document.addEventListener('DOMContentLoaded', function(){
             options: {
                 traffic: traffic
             }
-        }))
-
-
-    })
+        }));
+    });
 
     //Function for generating google map
     const initMap = data =>  {
-        console.log(data)
 
         let markerObject = []
 
@@ -127,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function(){
                 temp: data.allSteps[i].currentTemp
             }
         }
-        // console.log(markerObject)
 
         //creating map opject that centers on the start lat/lng
         let map = new google.maps.Map(document.getElementById('map'), {
@@ -149,7 +179,6 @@ document.addEventListener('DOMContentLoaded', function(){
         let marker = new google.maps.Marker({
         position: data.startGps,
         map: map,
-        //   icon: "./images/testMarker1.png"
         icon: "./images/" + data.startWeather + ".png"
         });
 
@@ -189,14 +218,17 @@ document.addEventListener('DOMContentLoaded', function(){
         if (markerObject[0]) {
         //Looping through our markerObject to create a new google maps marker with each identified step which qualifies
             for (let i = 0; i < markerObject.length; i += 1) {
+                // Creating step weather marker
                 marker = new google.maps.Marker({
                     position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
                     map:map,
                     icon: "./images/" + markerObject[i].weather + ".png"
                 })
 
+                // Grab temperature for step
                 let markerTemp = Math.round(markerObject[i].temp)
 
+                // Creating step temperature marker
                 marker = new google.maps.Marker({
                     position: {lat: markerObject[i].lat, lng: markerObject[i].lng},
                     map: map,
@@ -204,9 +236,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         url: "./images/" + markerTemp + ".png",
                         anchor: new google.maps.Point(20,0)
                     }
-                })
-            }
-        }
+                });
+            };
+        };
 
         //Calling the display route function and passing it required arguments.
         displayRoute(data.startCity, data.endCity, directionsService,
@@ -216,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function(){
     //Function for displaying our route on our google map initiated above
     const displayRoute = (origin, destination, service, display, markerObject) => {
 
-    //Creating up to 5 midpoints in order to increase likelyhood of google directions matching the map directions route
+        //Creating up to 5 midpoints in order to increase likelyhood of google directions matching the map directions route
         let midStop1 = parseInt(markerObject.length / 5);
         let midStop2 = parseInt(markerObject.length * 2 / 5);
         let midStop3 = parseInt(markerObject.length * 3 / 5);
@@ -224,8 +256,6 @@ document.addEventListener('DOMContentLoaded', function(){
         let lateStop = parseInt(markerObject.length - 1); 
 
         //Setting the directions route and also adding in the waypoints defined above.
-        
-        //Setting waypoints if there are actually 
         if (markerObject[0]) {
             service.route({
             origin: origin,
@@ -253,12 +283,12 @@ document.addEventListener('DOMContentLoaded', function(){
             }
             ]
 
-            }, function(response, status) {
+            }, (response, status) => {
             if (status === 'OK') {
                 display.setDirections(response);
             } else {
                 alert('Could not display directions due to: ' + status);
-            }
+            };
             });
         }
         
@@ -268,16 +298,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 origin: origin,
                 destination: destination,
                 travelMode: 'DRIVING'
-            }, function(response, status) {
+            }, (response, status) => {
                 if (status === 'OK') {
                     display.setDirections(response);
                 } else {
                     alert('Could not display directions due to: ' + status);
                 }
             });
-        }
-    }
+        };
+    };
 
-}, false);
-
-    
+}, false);    
