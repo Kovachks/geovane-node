@@ -1,8 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var path = require("path");
+// var path = require("path");
 var firebase = require("firebase")
-var googleMapsClient = require('@google/maps')
+// var googleMapsClient = require('@google/maps')
 require('firebase-admin')
 var config = require("./config/config.js")
 require("firebase/database")
