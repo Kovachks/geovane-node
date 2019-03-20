@@ -1,3 +1,4 @@
+// If access token detected in session storage then login
 if (sessionStorage.getItem('accessToken=')) {
 
     //Hide login/signup elements if token found
