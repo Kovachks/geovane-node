@@ -4,10 +4,7 @@ body {
 tr {
     height: 30px;
 }
-input {
-    color: grey;
-}
-.dropdown-item {
+input, .dropdown-item {
     color: grey;
 }
 #searchDiv {
@@ -62,20 +59,11 @@ input {
     display: none;
     color: red;
 }
-#signedIn {
-    display: none;
-}
 #errorMessage {
     color: red;
     display: none;
 }
-#newTrip {
-    display: none;
-}
-#loginDiv {
-    display: none;
-}
-#signupDiv {
+#newTrip, #loginDiv, #signupDiv, #signedIn {
     display: none;
 }
 .signupHeader {
@@ -212,13 +200,7 @@ td {
 .teal-color {
     background-color: #68BDEA;
 }
-h4 {
-    color: grey;
-}
-.navbar-brand {
-    color: grey;
-}
-label {
+h4, .navbar-brand, label {
     color: grey;
 }
 html {
@@ -232,6 +214,7 @@ body {
     background-color: #D3D3D3;
     color: white;
 }
+
 /* Smartphones (landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px)
@@ -263,7 +246,7 @@ and (max-device-width: 1028px) {
     #endCity {
         height: 50%;
     }
-    body {
+    body, .navbar {
         width: 100%;
     }
     #searchDiv {
@@ -272,9 +255,6 @@ and (max-device-width: 1028px) {
     .resultsContainer {
         margin-left: 40%;
         width: 60%;
-    }
-    .navbar {
-        width: 100%;
     }
 }
 
@@ -323,10 +303,7 @@ and (max-device-width : 550px) {
     th {
         font-size: 12px;
     }
-    .gmnoprint {
-        display: none;
-    }
-    .gm-svpc {
+    .gmnoprint, .gm-svpc {
         display: none;
     }
     tr {
